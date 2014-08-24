@@ -68,7 +68,7 @@ public class MapCamProcessor implements InputProcessor {
 			float scaleX = viewport.getWorldWidth() / viewport.getViewportWidth();
 			float scaleY = viewport.getWorldWidth() / viewport.getViewportWidth();
 			Gdx.app.log("Scale", scaleX + "/" + scaleY);
-			v.scl(-scaleX, scaleY);
+			v.scl(-scaleX, scaleY).scl(cam.zoom);
 			cam.position.x = camPosition.x + v.x;
 			cam.position.y = camPosition.y + v.y;
 		}
@@ -82,6 +82,19 @@ public class MapCamProcessor implements InputProcessor {
 
 	@Override
 	public boolean scrolled(int amount) {
-		return false;
+		if (rightClickPointer != -1) {
+			// TODO: Currently not everything matches up when zooming while
+			// scrolling. currently just disable zoom while scrolling
+			return false;
+		}
+		float factor = amount < 0 ? -0.1f : 0.1f;
+		float zoom = cam.zoom + factor;
+		if (zoom < 0.1f) {
+			zoom = 0.1f;
+		} else if (zoom > 2f) {
+			zoom = 2f;
+		}
+		cam.zoom = zoom;
+		return true;
 	}
 }
