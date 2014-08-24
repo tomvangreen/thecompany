@@ -3,6 +3,10 @@ package ch.digitalmeat.company.level;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.digitalmeat.company.game.Company;
+import ch.digitalmeat.company.game.Settlement;
+import ch.digitalmeat.company.game.Settlement.SettlementType;
+
 import com.badlogic.gdx.graphics.Texture;
 
 public class GameMap {
@@ -49,5 +53,9 @@ public class GameMap {
 
 	public static interface TileMatcher {
 		public boolean matches(Tile tile);
+	}
+
+	public Settlement createSettlement(SettlementType type, List<Tile> tiles, Company company) {
+		return null;
 	}
 }

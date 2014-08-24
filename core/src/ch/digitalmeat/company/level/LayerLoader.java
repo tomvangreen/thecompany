@@ -1,12 +1,11 @@
 package ch.digitalmeat.company.level;
 
-import ch.digitalmeat.company.level.Tile.TerrainType;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 
-public class LayerLoader {
+public abstract class LayerLoader {
 	public boolean yDown;
+	private Color color = new Color();
 
 	public LayerLoader() {
 		this(false);
@@ -16,33 +15,34 @@ public class LayerLoader {
 		this.yDown = yDown;
 	}
 
-	public void applyLayer(GameMap map, Pixmap pixmap, TerrainType type) {
-		Color pixelColor = new Color();
-		
-		for (int y = 0; y < map.height; y++) {
-			for (int x = 0; x < map.height; x++) {
+	protected abstract void beforeLoad();
 
-				int tilesY = y;
+	protected abstract void afterLoad();
+
+	protected abstract void handleTile(Tile tile, int pixel, Color color, int mapX, int mapY, int pixmapX, int pixmapY);
+
+	public void apply(GameMap map, Pixmap pixmap) {
+		beforeLoad();
+		for (int pixmapY = 0; pixmapY < map.height; pixmapY++) {
+			for (int pixmapX = 0; pixmapX < map.height; pixmapX++) {
+				int mapX = pixmapX;
+				int mapY = pixmapY;
 
 				if (yDown) {
-					tilesY = map.height - y;
+					mapY = map.height - pixmapY;
 				}
-				
-				int pixmapY = map.height - y;
 
-				Tile tile = map.tile(x, tilesY);
+				Tile tile = map.tile(mapX, mapY);
 
 				if (tile != null) {
-					int pixel = pixmap.getPixel(x, pixmapY);
-					
-					Color.rgba8888ToColor(pixelColor, pixel);
-					if (pixelColor.a > 0) {
-						tile.type = type;
-					}
+					int pixel = pixmap.getPixel(pixmapX, pixmapY);
+					Color.rgba8888ToColor(color, pixel);
+					handleTile(tile, pixel, color, mapX, mapY, pixmapX, pixmapY);
 				}
 
 			}
 		}
+		afterLoad();
 	}
 
 }

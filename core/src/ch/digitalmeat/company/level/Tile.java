@@ -1,11 +1,19 @@
 package ch.digitalmeat.company.level;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import ch.digitalmeat.company.game.Settlement;
+
 public class Tile {
 	public final int x;
 	public final int y;
 	public final GameMap map;
 
 	public TerrainType type = TerrainType.Sea;
+	public Settlement settlement;
+
+	public final Set<Integer> visibleFor = new HashSet<Integer>();
 
 	public Tile(GameMap map, int x, int y) {
 		this.map = map;

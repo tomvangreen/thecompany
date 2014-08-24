@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 
 public class MapLoader {
-	private final LayerLoader layerLoader = new LayerLoader();
+	private final TerrainLayerLoader terrainLoader = new TerrainLayerLoader();
 
 	public GameMap load(String levelNameWithoutExtension) {
 		String levelName = levelNameWithoutExtension + ".png";
@@ -21,7 +21,8 @@ public class MapLoader {
 			if (Assets.fileExists(layerFile)) {
 				Pixmap pixmap = Assets.getPixmap(layerFile);
 				if (isPixmapValid(map, pixmap)) {
-					layerLoader.applyLayer(map, pixmap, terrain);
+					terrainLoader.setType(terrain);
+					terrainLoader.apply(map, pixmap);
 				}
 				pixmap.dispose();
 			}
@@ -32,5 +33,5 @@ public class MapLoader {
 	private boolean isPixmapValid(GameMap map, Pixmap pixmap) {
 		return pixmap != null && map.width == pixmap.getWidth() && map.height == pixmap.getHeight();
 	}
-	
+
 }
