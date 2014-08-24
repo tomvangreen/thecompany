@@ -19,6 +19,9 @@ public class App extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		cams = new Cams(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
 		map = Assets.loadMap("levels/map-01/map-01");
+		System.out.println(map.tile(75, 30).type);
+		System.out.println(map.tile(175, 130).type);
+		System.out.println(map.tile(75, 230).type);
 	}
 
 	@Override

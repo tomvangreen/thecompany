@@ -23,6 +23,7 @@ public class MapLoader {
 				if (isPixmapValid(map, pixmap)) {
 					layerLoader.applyLayer(map, pixmap, terrain);
 				}
+				pixmap.dispose();
 			}
 		}
 		return map;
@@ -31,4 +32,5 @@ public class MapLoader {
 	private boolean isPixmapValid(GameMap map, Pixmap pixmap) {
 		return pixmap != null && map.width == pixmap.getWidth() && map.height == pixmap.getHeight();
 	}
+	
 }
