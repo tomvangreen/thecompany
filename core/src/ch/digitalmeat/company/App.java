@@ -1,6 +1,7 @@
 package ch.digitalmeat.company;
 
 import ch.digitalmeat.company.gfx.Cams;
+import ch.digitalmeat.company.gfx.MapRenderer;
 import ch.digitalmeat.company.level.GameMap;
 
 import com.badlogic.gdx.ApplicationAdapter;
@@ -19,20 +20,19 @@ public class App extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		cams = new Cams(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
 		map = Assets.loadMap("levels/map-01/map-01");
+		cams.game.addActor(new MapRenderer(map));
 	}
 
 	@Override
 	public void render() {
+		// Update
+		float deltaTime = Gdx.graphics.getDeltaTime();
+		cams.update(deltaTime);
+
+		// Render
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		if (map != null) {
-			float deltaTime = Gdx.graphics.getDeltaTime();
-			cams.update(deltaTime);
-			batch.setProjectionMatrix(cams.gameCam.combined);
-			batch.begin();
-			batch.draw(map.texture, 0, 0);
-			batch.end();
-		}
+		cams.draw();
 	}
 
 	@Override
