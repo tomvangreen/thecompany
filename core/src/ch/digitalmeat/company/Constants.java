@@ -6,4 +6,7 @@ public class Constants {
 
 	public final static int WINDOW_WIDTH = 640;
 	public final static int WINDOW_HEIGHT = 400;
+	public static final float CAM_ZOOM_MAX = 2f;
+	public static final float CAM_ZOOM_MIN = 0.1f;
+	public static final float CAM_ZOOM_STEP = 0.25f;
 }

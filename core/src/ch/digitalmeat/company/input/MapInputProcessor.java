@@ -1,12 +1,15 @@
 package ch.digitalmeat.company.input;
 
+import ch.digitalmeat.company.Constants;
+import ch.digitalmeat.company.event.Events;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class MapCamProcessor implements InputProcessor {
+public class MapInputProcessor implements InputProcessor {
 
 	private final OrthographicCamera cam;
 
@@ -16,7 +19,7 @@ public class MapCamProcessor implements InputProcessor {
 
 	private Viewport viewport;
 
-	public MapCamProcessor(Viewport viewport, OrthographicCamera cam) {
+	public MapInputProcessor(Viewport viewport, OrthographicCamera cam) {
 		this.viewport = viewport;
 		this.cam = cam;
 	}
@@ -68,9 +71,9 @@ public class MapCamProcessor implements InputProcessor {
 			float scaleX = viewport.getWorldWidth() / viewport.getViewportWidth();
 			float scaleY = viewport.getWorldWidth() / viewport.getViewportWidth();
 			Gdx.app.log("Scale", scaleX + "/" + scaleY);
-			v.scl(-scaleX, scaleY).scl(cam.zoom);
-			cam.position.x = camPosition.x + v.x;
-			cam.position.y = camPosition.y + v.y;
+			v.scl(-scaleX, scaleY).scl(cam.zoom).add(camPosition);
+
+			Events.factory.cam(v);
 		}
 		return false;
 	}
@@ -87,14 +90,16 @@ public class MapCamProcessor implements InputProcessor {
 			// scrolling. currently just disable zoom while scrolling
 			return false;
 		}
-		float factor = amount < 0 ? -0.1f : 0.1f;
-		float zoom = cam.zoom + factor;
-		if (zoom < 0.1f) {
-			zoom = 0.1f;
-		} else if (zoom > 2f) {
-			zoom = 2f;
+		float zoom = cam.zoom;
+		int steps = Math.abs(amount);
+		while (steps-- > 0) {
+			float factor = amount < 0 ? -Constants.CAM_ZOOM_STEP : Constants.CAM_ZOOM_STEP;
+			factor = factor * cam.zoom;
+			zoom += factor;
 		}
-		cam.zoom = zoom;
+		zoom = Math.max(zoom, Constants.CAM_ZOOM_MIN);
+		zoom = Math.min(zoom, Constants.CAM_ZOOM_MAX);
+		Events.factory.cam(zoom, true);
 		return true;
 	}
 }

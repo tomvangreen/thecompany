@@ -1,5 +1,6 @@
 package ch.digitalmeat.company;
 
+import ch.digitalmeat.company.event.Events;
 import ch.digitalmeat.company.gfx.Stages;
 import ch.digitalmeat.company.level.GameMap;
 
@@ -24,6 +25,8 @@ public class App extends ApplicationAdapter {
 
 	@Override
 	public void render() {
+		Events.factory.getQueue().dispatch();
+
 		// Update
 		float deltaTime = Gdx.graphics.getDeltaTime();
 		stages.update(deltaTime);
