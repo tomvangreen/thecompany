@@ -19,8 +19,14 @@ public class MapLoader {
 		for (TerrainType terrain : TerrainType.values()) {
 			String layerFile = levelNameWithoutExtension + "-" + terrain.levelExtension + ".png";
 			Pixmap pixmap = Assets.getPixmap(layerFile);
-			layerLoader.applyLayer(map, pixmap, terrain);
+			if (isPixmapValid(map, pixmap)) {
+				layerLoader.applyLayer(map, pixmap, terrain);
+			}
 		}
 		return map;
+	}
+
+	private boolean isPixmapValid(Map map, Pixmap pixmap) {
+		return pixmap != null && map.width == pixmap.getWidth() && map.height == pixmap.getHeight();
 	}
 }
