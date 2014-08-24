@@ -1,6 +1,6 @@
 package ch.digitalmeat.company;
 
-import ch.digitalmeat.company.level.Map;
+import ch.digitalmeat.company.level.GameMap;
 import ch.digitalmeat.company.level.MapLoader;
 
 import com.badlogic.gdx.Gdx;
@@ -26,7 +26,7 @@ public class Assets {
 		return new Pixmap(Gdx.files.internal(path));
 	}
 
-	public static Map loadMap(String mapNameWithoutExtension) {
+	public static GameMap loadMap(String mapNameWithoutExtension) {
 		return mapLoader.load(mapNameWithoutExtension);
 	}
 

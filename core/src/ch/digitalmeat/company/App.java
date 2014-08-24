@@ -1,7 +1,7 @@
 package ch.digitalmeat.company;
 
 import ch.digitalmeat.company.gfx.Cams;
-import ch.digitalmeat.company.level.Map;
+import ch.digitalmeat.company.level.GameMap;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class App extends ApplicationAdapter {
 	private SpriteBatch batch;
-	private Map map;
+	private GameMap map;
 	public Cams cams;
 
 	@Override

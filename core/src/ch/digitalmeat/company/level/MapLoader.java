@@ -9,13 +9,13 @@ import com.badlogic.gdx.graphics.Texture;
 public class MapLoader {
 	private final LayerLoader layerLoader = new LayerLoader();
 
-	public Map load(String levelNameWithoutExtension) {
+	public GameMap load(String levelNameWithoutExtension) {
 		String levelName = levelNameWithoutExtension + ".png";
 		Texture levelTexture = Assets.getTexture(levelName);
 		if (levelTexture == null) {
 			throw new RuntimeException("Main level image has not been found: " + levelName);
 		}
-		Map map = new Map(levelTexture);
+		GameMap map = new GameMap(levelTexture);
 		for (TerrainType terrain : TerrainType.values()) {
 			String layerFile = levelNameWithoutExtension + "-" + terrain.levelExtension + ".png";
 			if (Assets.fileExists(layerFile)) {
@@ -28,7 +28,7 @@ public class MapLoader {
 		return map;
 	}
 
-	private boolean isPixmapValid(Map map, Pixmap pixmap) {
+	private boolean isPixmapValid(GameMap map, Pixmap pixmap) {
 		return pixmap != null && map.width == pixmap.getWidth() && map.height == pixmap.getHeight();
 	}
 }

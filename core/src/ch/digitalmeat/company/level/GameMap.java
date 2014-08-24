@@ -5,14 +5,14 @@ import java.util.List;
 
 import com.badlogic.gdx.graphics.Texture;
 
-public class Map {
+public class GameMap {
 	public final Texture texture;
 	public final int width;
 	public final int height;
 
 	private List<Tile> tiles = new ArrayList<Tile>();
 
-	public Map(Texture texture) {
+	public GameMap(Texture texture) {
 		this.texture = texture;
 		this.width = texture.getWidth();
 		this.height = texture.getHeight();

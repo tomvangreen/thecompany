@@ -15,7 +15,7 @@ public class LayerLoader {
 		this.yDown = yDown;
 	}
 
-	public void applyLayer(Map map, Pixmap pixmap, TerrainType type) {
+	public void applyLayer(GameMap map, Pixmap pixmap, TerrainType type) {
 
 	}
 }
