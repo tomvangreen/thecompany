@@ -36,9 +36,6 @@ public class LayerLoader {
 					int pixel = pixmap.getPixel(x, pixmapY);
 					
 					Color.rgba8888ToColor(pixelColor, pixel);
-					if(x == 35 && y == 47) {
-						System.out.println(pixelColor + " " + x + "x" + pixmapY);
-					}
 					if (pixelColor.a > 0) {
 						tile.type = type;
 					}
