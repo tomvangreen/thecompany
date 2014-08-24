@@ -1,6 +1,6 @@
 package ch.digitalmeat.company;
 
-import ch.digitalmeat.company.gfx.Cams;
+import ch.digitalmeat.company.gfx.Stages;
 import ch.digitalmeat.company.level.GameMap;
 
 import com.badlogic.gdx.ApplicationAdapter;
@@ -11,35 +11,31 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class App extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private GameMap map;
-	public Cams cams;
+	public Stages stages;
 
 	@Override
 	public void create() {
 		Assets.create();
 		batch = new SpriteBatch();
-		cams = new Cams(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
+		stages = new Stages(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
 		map = Assets.loadMap("levels/map-01/map-01");
-		System.out.println(map.tile(75, 30).type);
-		System.out.println(map.tile(175, 130).type);
-		System.out.println(map.tile(75, 230).type);
+		stages.loadMap(map);
 	}
 
 	@Override
 	public void render() {
+		// Update
+		float deltaTime = Gdx.graphics.getDeltaTime();
+		stages.update(deltaTime);
+
+		// Render
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		if (map != null) {
-			float deltaTime = Gdx.graphics.getDeltaTime();
-			cams.update(deltaTime);
-			batch.setProjectionMatrix(cams.gameCam.combined);
-			batch.begin();
-			batch.draw(map.texture, 0, 0);
-			batch.end();
-		}
+		stages.draw();
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		cams.resize(width, height);
+		stages.resize(width, height);
 	}
 }
