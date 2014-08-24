@@ -15,4 +15,22 @@ public enum Direction {
 		this.cardinality = cardinality;
 	}
 
+	public int getXOffset() {
+		if (this == East) {
+			return 1;
+		} else if (this == West) {
+			return -1;
+		}
+		return 0;
+	}
+
+	public int getYOffset() {
+		if (this == North) {
+			return 1;
+		} else if (this == South) {
+			return -1;
+		}
+		return 0;
+	}
+
 }

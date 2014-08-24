@@ -19,7 +19,7 @@ public class GameMap {
 
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				tiles.add(new Tile(x, y));
+				tiles.add(new Tile(this, x, y));
 			}
 		}
 	}
@@ -31,7 +31,23 @@ public class GameMap {
 		return null;
 	}
 
-	private boolean areCoordinatesValid(int x, int y) {
+	public boolean areCoordinatesValid(int x, int y) {
 		return x > 0 && x < width && y > 0 && y < height;
+	}
+
+	public void floodFill(List<Tile> results, Tile tile, TileMatcher matcher) {
+		if (matcher.matches(tile)) {
+			results.add(tile);
+			for (Direction direction : Direction.values()) {
+				Tile neighbour = tile.neighbour(direction);
+				if (neighbour != null) {
+					floodFill(results, neighbour, matcher);
+				}
+			}
+		}
+	}
+
+	public static interface TileMatcher {
+		public boolean matches(Tile tile);
 	}
 }

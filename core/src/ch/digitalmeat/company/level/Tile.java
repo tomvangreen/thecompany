@@ -3,12 +3,18 @@ package ch.digitalmeat.company.level;
 public class Tile {
 	public final int x;
 	public final int y;
+	public final GameMap map;
 
 	public TerrainType type = TerrainType.Sea;
 
-	public Tile(int x, int y) {
+	public Tile(GameMap map, int x, int y) {
+		this.map = map;
 		this.x = x;
 		this.y = y;
+	}
+
+	public Tile neighbour(Direction direction) {
+		return map.tile(x + direction.getXOffset(), y + direction.getYOffset());
 	}
 
 	public static enum TerrainType {
