@@ -3,15 +3,19 @@ package ch.digitalmeat.company.level;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.graphics.Texture;
+
 public class Map {
+	public final Texture texture;
 	public final int width;
 	public final int height;
 
 	private List<Tile> tiles = new ArrayList<Tile>();
 
-	public Map(int width, int height) {
-		this.width = width;
-		this.height = height;
+	public Map(Texture texture) {
+		this.texture = texture;
+		this.width = texture.getWidth();
+		this.height = texture.getHeight();
 
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {

@@ -15,12 +15,14 @@ public class MapLoader {
 		if (levelTexture == null) {
 			throw new RuntimeException("Main level image has not been found: " + levelName);
 		}
-		Map map = new Map(levelTexture.getWidth(), levelTexture.getHeight());
+		Map map = new Map(levelTexture);
 		for (TerrainType terrain : TerrainType.values()) {
 			String layerFile = levelNameWithoutExtension + "-" + terrain.levelExtension + ".png";
-			Pixmap pixmap = Assets.getPixmap(layerFile);
-			if (isPixmapValid(map, pixmap)) {
-				layerLoader.applyLayer(map, pixmap, terrain);
+			if (Assets.fileExists(layerFile)) {
+				Pixmap pixmap = Assets.getPixmap(layerFile);
+				if (isPixmapValid(map, pixmap)) {
+					layerLoader.applyLayer(map, pixmap, terrain);
+				}
 			}
 		}
 		return map;

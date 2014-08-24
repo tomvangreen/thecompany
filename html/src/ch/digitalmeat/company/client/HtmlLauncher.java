@@ -3,7 +3,7 @@ package ch.digitalmeat.company.client;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import ch.digitalmeat.company.TheCompany;
+import ch.digitalmeat.company.App;
 
 public class HtmlLauncher extends GwtApplication {
 
@@ -14,6 +14,6 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public ApplicationListener getApplicationListener () {
-                return new TheCompany();
+                return new App();
         }
 }

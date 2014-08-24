@@ -14,6 +14,10 @@ public class Assets {
 		mapLoader = new MapLoader();
 	}
 
+	public static boolean fileExists(String path) {
+		return Gdx.files.internal(path).exists();
+	}
+
 	public static Texture getTexture(String path) {
 		return new Texture(Gdx.files.internal(path));
 	}
