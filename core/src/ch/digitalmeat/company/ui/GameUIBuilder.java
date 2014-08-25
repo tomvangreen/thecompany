@@ -43,6 +43,8 @@ public class GameUIBuilder implements EventListener {
 
 	private Table sideContent;
 
+	private Table details;
+
 	public GameUIBuilder(Stage stage) {
 		this.stage = stage;
 	}
@@ -73,6 +75,11 @@ public class GameUIBuilder implements EventListener {
 			}
 
 		};
+		details = new Table(Assets.skin);
+		details.add("YAY");
+		Table mainTable = new Table(Assets.skin);
+		mainTable.add(infoBar).expandX().fillX().row();
+		mainTable.add(details).expand().fill().row();
 		infoBar.setTouchable(Touchable.enabled);
 		infoBar.addListener(stopTouch);
 		sidePanel.addListener(stopTouch);
@@ -83,7 +90,7 @@ public class GameUIBuilder implements EventListener {
 
 		sideContent = new Table(Assets.skin);
 		sidePanel.add(sideContent).pad(3).expandY().fill();
-		table.add(infoBar).expandX().fillX().align(Align.top | Align.left);
+		table.add(mainTable).expand().fill().align(Align.top | Align.left);
 		// table.add().expand();
 		table.add(sidePanel).prefWidth(Constants.SIDEPANEL_WIDTH).expandY().fill();
 		fadeIn(table, 0.5f, 2f);
@@ -172,4 +179,13 @@ public class GameUIBuilder implements EventListener {
 		}
 
 	};
+
+	public void hideExisting() {
+
+	}
+
+	public void buildBuildings(Settlement settlement) {
+
+	}
+
 }

@@ -66,7 +66,7 @@ public class Settlement implements InfoBarItem {
 		City, Harbor, Camp
 	}
 
-	public Collection<Tile> tiles() {
+	public List<Tile> tiles() {
 		return tiles;
 	}
 

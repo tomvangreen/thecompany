@@ -2,15 +2,19 @@ package ch.digitalmeat.company.level.loader;
 
 import ch.digitalmeat.company.Assets;
 import ch.digitalmeat.company.Constants;
+import ch.digitalmeat.company.event.Events;
 import ch.digitalmeat.company.game.Company;
+import ch.digitalmeat.company.game.Settlement;
 import ch.digitalmeat.company.game.economy.Economy;
 import ch.digitalmeat.company.game.economy.EconomyLoader;
 import ch.digitalmeat.company.level.GameMap;
+import ch.digitalmeat.company.level.Tile;
 import ch.digitalmeat.company.level.Tile.TerrainType;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.JsonValue;
 
 public class MapLoader {
@@ -40,8 +44,14 @@ public class MapLoader {
 
 		String layerFile = levelNameWithoutExtension + "-" + Constants.SETTLEMENTS_FILE_EXTENSION + ".png";
 		loadLayer(map, layerFile, settlementsLoader);
+		Settlement s = map.getCompanies().get(0).getSettlements().get(0);
+		Tile tile = s.tiles().get(0);
+		v.set(tile.x, tile.y);
+		Events.factory.cam(v, 0.25f, true, true, true);
 		return map;
 	}
+
+	private Vector2 v = new Vector2();
 
 	private void loadTerrains(String levelNameWithoutExtension, GameMap map) {
 		for (TerrainType terrain : TerrainType.values()) {

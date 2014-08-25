@@ -41,4 +41,8 @@ public class Company {
 		tile.company = this;
 		territory.add(tile);
 	}
+
+	public List<Settlement> getSettlements() {
+		return settlements;
+	}
 }
