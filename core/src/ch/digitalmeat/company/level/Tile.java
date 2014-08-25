@@ -54,4 +54,11 @@ public class Tile {
 			this.buildableArea = buildableArea;
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "Tile(" + x + "," + y + ")";
+	}
+	
+	
 }
