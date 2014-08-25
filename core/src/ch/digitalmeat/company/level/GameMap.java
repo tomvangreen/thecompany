@@ -120,13 +120,23 @@ public class GameMap {
 			company.claim(tile);
 			return;
 		}
+		temp.clear();
 		distanceMatcher.setTile(tile);
 		distanceMatcher.setDistance(distance);
-		distanceMatcher.setFunction(DistanceFunction.Manhattan);
+		distanceMatcher.setFunction(DistanceFunction.Linear);
 		floodFill(temp, tile, distanceMatcher);
 		for (Tile candidate : temp) {
 			company.claim(candidate);
 		}
+		temp.clear();
+		distanceMatcher.setDistance(distance * 10);
+		floodFill(temp, tile, distanceMatcher);
+		for (Tile sighted : temp) {
+			if (sighted.company != company) {
+				sighted.visibleFor.add(company);
+			}
+		}
+		temp.clear();
 	}
 
 	public long getTick() {

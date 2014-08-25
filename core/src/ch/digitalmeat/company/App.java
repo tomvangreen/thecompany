@@ -8,6 +8,7 @@ import ch.digitalmeat.company.event.GameSpeedEvent.GameSpeedEventListener;
 import ch.digitalmeat.company.event.TileSelectedEvent;
 import ch.digitalmeat.company.event.TileSelectedEvent.TileSelectedEventListener;
 import ch.digitalmeat.company.game.GameSpeed;
+import ch.digitalmeat.company.game.Settlement;
 import ch.digitalmeat.company.gfx.Stages;
 import ch.digitalmeat.company.level.GameMap;
 import ch.digitalmeat.company.level.Tile;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 
 public class App extends ApplicationAdapter implements TileSelectedEventListener, GameSpeedEventListener {
 	private SpriteBatch batch;
@@ -87,12 +89,18 @@ public class App extends ApplicationAdapter implements TileSelectedEventListener
 		Gdx.app.exit();
 	}
 
+	private Vector2 v = new Vector2();
+
 	private void loadMap() {
 		map = Assets.loadMap("levels/map-01/map-01");
 		stages.game.clear();
 		stages.ui.clear();
 		stages.loadMap(map);
 		uiBuilder.createGameUI(map);
+		Settlement s = map.getCompanies().get(0).getSettlements().get(0);
+		Tile tile = s.tiles().get(0);
+		v.set(tile.x, tile.y);
+		Events.factory.cam(v, 0.25f, true, true, true);
 	}
 
 	@Override
