@@ -11,9 +11,7 @@ import ch.digitalmeat.company.Colors;
 import ch.digitalmeat.company.Constants;
 import ch.digitalmeat.company.level.GameMap;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
@@ -59,12 +57,6 @@ public class GameUIBuilder {
 		fadeIn(table, 0.5f, 2f);
 		stage.getRoot().setColor(Color.WHITE);
 		stage.addActor(table);
-		stage.addActor(new Actor() {
-			@Override
-			public void draw(Batch batch, float parent) {
-				Gdx.app.log("UI", "Parent Alpha: " + parent);
-			}
-		});
 	}
 
 	public void setSelectionItems(Collection<InfoBarItem> items) {

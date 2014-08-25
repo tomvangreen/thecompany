@@ -39,7 +39,6 @@ public class App extends ApplicationAdapter {
 
 	@Override
 	public void render() {
-		Gdx.app.log("App", "Render");
 		Events.factory.getQueue().dispatch();
 
 		// Update
