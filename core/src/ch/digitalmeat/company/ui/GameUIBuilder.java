@@ -14,7 +14,6 @@ import ch.digitalmeat.company.game.Settlement;
 import ch.digitalmeat.company.level.GameMap;
 import ch.digitalmeat.company.trigger.AppEventTrigger;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
@@ -62,11 +61,10 @@ public class GameUIBuilder implements EventListener {
 		infoBar.add("20");
 		sidePanel = new Table(Assets.skin);
 		sidePanel.setTouchable(Touchable.enabled);
-		sidePanel.addListener(new EventListener() {
+		EventListener stopTouch = new EventListener() {
 
 			@Override
 			public boolean handle(Event event) {
-				Gdx.app.log("Blarg", event.toString());
 				if (event instanceof InputEvent) {
 					event.stop();
 					return true;
@@ -74,7 +72,10 @@ public class GameUIBuilder implements EventListener {
 				return false;
 			}
 
-		});
+		};
+		infoBar.setTouchable(Touchable.enabled);
+		infoBar.addListener(stopTouch);
+		sidePanel.addListener(stopTouch);
 		sidePanel.setBackground(background);
 		itemSelector = new SelectBox<InfoBarItem>(Assets.skin, "info");
 		itemSelector.addListener(this);
