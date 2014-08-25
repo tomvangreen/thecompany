@@ -1,4 +1,7 @@
-package ch.digitalmeat.company.level;
+package ch.digitalmeat.company.level.loader;
+
+import ch.digitalmeat.company.level.GameMap;
+import ch.digitalmeat.company.level.Tile;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;

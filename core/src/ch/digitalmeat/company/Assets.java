@@ -1,7 +1,7 @@
 package ch.digitalmeat.company;
 
 import ch.digitalmeat.company.level.GameMap;
-import ch.digitalmeat.company.level.MapLoader;
+import ch.digitalmeat.company.level.loader.MapLoader;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;

@@ -1,10 +1,12 @@
-package ch.digitalmeat.company.level;
+package ch.digitalmeat.company.level.loader;
 
 import ch.digitalmeat.company.Assets;
 import ch.digitalmeat.company.Constants;
 import ch.digitalmeat.company.game.Company;
 import ch.digitalmeat.company.game.economy.Economy;
 import ch.digitalmeat.company.game.economy.EconomyLoader;
+import ch.digitalmeat.company.level.GameMap;
+import ch.digitalmeat.company.level.Tile;
 import ch.digitalmeat.company.level.Tile.TerrainType;
 
 import com.badlogic.gdx.Gdx;
