@@ -12,8 +12,6 @@ public class Person {
 
 	public float happiness = 0f;
 
-	public PersonType personType = PersonType.Apprentice;
-
 	public GoodComponent consumption;
 
 	public float weight;
@@ -33,12 +31,6 @@ public class Person {
 		workForce = 1f;
 		lineOfSight = 1f;
 		happiness = 1f;
-	}
-
-	public static enum PersonType {
-		// @formatter: off
-		Apprentice, Worker, Soldier, Master, General, Scout;
-		// @formatter: on
 	}
 
 	public void tick() {
