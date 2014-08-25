@@ -49,7 +49,7 @@ public class MapRenderer extends Actor {
 			
 			if(company.renderTerritory) {
 				for(Tile tile : company.territory) {
-					batch.draw(Assets.whitePixel, tile.x, tile.y);
+					batch.draw(Assets.whitePixel, tile.x, tile.y, 1f, 1f);
 				}					
 			}
 		}
