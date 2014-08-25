@@ -72,6 +72,7 @@ public class GameMap {
 		}
 
 		settlements.add(settlement);
+		company.settlements.add(settlement);
 
 		return settlement;
 	}

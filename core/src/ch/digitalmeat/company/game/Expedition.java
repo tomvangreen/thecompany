@@ -1,5 +1,10 @@
 package ch.digitalmeat.company.game;
 
-public class Expedition {
+import java.util.ArrayList;
+import java.util.List;
 
+public class Expedition {
+	
+	public final List<ExpeditionUnit> units = new ArrayList<ExpeditionUnit>();
+	
 }
