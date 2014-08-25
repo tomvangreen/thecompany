@@ -48,7 +48,7 @@ public class Settlement {
 		tiles.add(tile);
 		availableArea += tile.type.buildableArea;
 		for (Tile claimTile : tiles) {
-			map.claim(tile, owner, tiles.size() + 1);
+			map.claim(tile, owner, tiles.size());
 		}
 	}
 

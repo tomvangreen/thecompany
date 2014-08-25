@@ -33,10 +33,11 @@ public class Company {
 	public void claim(Tile tile) {
 		if (tile.company != null) {
 			if (tile.company != this) {
-				Gdx.app.log("Company", "Could not claim land. It already belongs to a different company.");
+				Gdx.app.log("Company", "Could not claim land " + tile.x + "/" + tile.y + ". It already belongs to a different company.");
 			}
 			return;
 		}
+		Gdx.app.log("Company", "Claiming Land");
 		tile.company = this;
 		territory.add(tile);
 	}

@@ -94,13 +94,17 @@ public class GameMap {
 	private final List<Tile> temp = new ArrayList<Tile>();
 	private final DistanceTileMatcher distanceMatcher = new DistanceTileMatcher();
 
-	public void claim(Tile tile, Company owner, float distance) {
+	public void claim(Tile tile, Company company, float distance) {
+		if (distance == 0) {
+			company.claim(tile);
+			return;
+		}
 		distanceMatcher.setTile(tile);
 		distanceMatcher.setDistance(distance);
 		distanceMatcher.setFunction(DistanceFunction.Manhattan);
 		floodFill(temp, tile, distanceMatcher);
 		for (Tile candidate : temp) {
-
+			company.claim(candidate);
 		}
 	}
 }

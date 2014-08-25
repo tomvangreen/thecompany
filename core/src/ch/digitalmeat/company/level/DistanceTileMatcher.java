@@ -1,5 +1,6 @@
 package ch.digitalmeat.company.level;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 public class DistanceTileMatcher implements TileMatcher {
@@ -13,7 +14,8 @@ public class DistanceTileMatcher implements TileMatcher {
 			return false;
 		}
 		float otherDistance = function.getDistance(tile, other);
-		return otherDistance < distance;
+		Gdx.app.log("DistanceTileMatcher", "" + otherDistance);
+		return otherDistance <= distance;
 	}
 
 	public DistanceFunction getFunction() {
@@ -46,7 +48,7 @@ public class DistanceTileMatcher implements TileMatcher {
 
 		public float getDistance(Tile a, Tile b) {
 			if (this == Manhattan) {
-				return a.x - b.x + a.y - b.y;
+				return Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
 			} else if (this == Linear) {
 				return v.set(a.x, a.y).sub(b.x, b.y).len();
 			}
