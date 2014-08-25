@@ -9,7 +9,10 @@ import java.util.List;
 import ch.digitalmeat.company.Assets;
 import ch.digitalmeat.company.Colors;
 import ch.digitalmeat.company.Constants;
+import ch.digitalmeat.company.event.AppEvent.AppEventType;
+import ch.digitalmeat.company.game.Settlement;
 import ch.digitalmeat.company.level.GameMap;
+import ch.digitalmeat.company.trigger.AppEventTrigger;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -18,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
@@ -29,6 +33,9 @@ public class GameUIBuilder implements EventListener {
 
 	private Table sidePanel;
 	private Table infoBar;
+
+	public final TriggerEventListener buildingsListener = new TriggerEventListener(new AppEventTrigger(AppEventType.Exit));
+	public final TriggerEventListener convoisListener = new TriggerEventListener(new AppEventTrigger(AppEventType.Exit));
 
 	public SelectBox<InfoBarItem> itemSelector;
 
@@ -91,9 +98,21 @@ public class GameUIBuilder implements EventListener {
 	}
 
 	public void updateInfoPanel(InfoBarItem item) {
+		itemSelector.setDisabled(itemSelector.getItems().size <= 1);
 		sideContent.clearChildren();
-		sideContent.add(item.getLabel()).align(Align.left | Align.top).row();
-		sideContent.add().expand();
+		if (item instanceof Settlement) {
+			sideContent.add(item.getLabel()).align(Align.left | Align.top).row();
+			sideContent.add().expand().row();
+			sideContent.add(button("Buildings", "Buildings", buildingsListener)).fillX().row();
+			sideContent.add(button("Convois", "Convois", convoisListener)).fillX().row();
+		}
+	}
+
+	private TextButton button(String name, String label, EventListener listener) {
+		TextButton button = new TextButton(label, Assets.skin);
+		button.setName(name);
+		button.addListener(listener);
+		return button;
 	}
 
 	private void fadeIn(Actor actor, float delayTime, float fadeTime) {
@@ -108,10 +127,6 @@ public class GameUIBuilder implements EventListener {
 		//@formatter:on
 	}
 
-	public static interface InfoBarItem {
-		public String getLabel();
-	}
-
 	@Override
 	public boolean handle(Event event) {
 		if (event instanceof ChangeEvent) {
@@ -122,4 +137,21 @@ public class GameUIBuilder implements EventListener {
 		return false;
 	}
 
+	public static interface InfoBarItem {
+		public String getLabel();
+	}
+
+	public final static InfoBarItem EMPTY = new InfoBarItem() {
+
+		@Override
+		public String getLabel() {
+			return "-";
+		}
+
+		@Override
+		public String toString() {
+			return getLabel();
+		}
+
+	};
 }
