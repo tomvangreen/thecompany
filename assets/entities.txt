@@ -1,0 +1,59 @@
+Settlement
+	Population (by person type and employment)
+	Buildings (Total)
+	Company
+	Tiles
+
+Buildings
+	area
+	workForce
+	production processes
+	Importance (more important buildings use up resources before the less important ones)
+	(wohnhäuser werden nicht berücksichtigt sondern es wird ausgegangen dass jeder gebäude typ seine eigenen häuser zur verfügung stellt)
+Tile
+	Terrain
+	Company
+	Visibility per Company
+
+Terrain
+	isLand
+	pathCost
+	buildableArea
+
+Konvoi
+	Vehicles
+	Position
+	Waypoints
+	Speed (virtuell := speed of slowest member)
+
+Vehicle
+	Set of passable terrains
+	Storage Capacity
+	Allowed Storage Types
+	FightingForce
+	Line of Sight
+	Weight
+
+	Es könnte ein spezielles "Persons" vehicle geben. Beispiel. Einfach eine runde von spähern macht einen ausflug...
+	Es wird ein virtuelles "Späher" fahrzeug erstellt.
+
+Person
+	Type (Lehrling, Arbeiter, Soldat, Meister, General, Späher)
+	WorkForce
+	FightForce
+	Speed (evtl. default speed und speed per terrain)
+	Line of Sight
+	Weight
+	Consumption
+	Hapiness
+	Professions
+
+Goods
+	name
+	basePrice
+	weight
+
+IndustryProcesses
+	Input Goods (and amount) => recipe
+	Output goods (and amount)
+
