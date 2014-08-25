@@ -1,6 +1,7 @@
 package ch.digitalmeat.company.game.economy;
 
 import ch.digitalmeat.company.Assets;
+import ch.digitalmeat.company.game.Vehicle;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonValue;
@@ -18,6 +19,7 @@ public class EconomyLoader {
 		loadEducations(root.get("educations"));
 		loadIndustryProcesses(root.get("processes"));
 		loadBuildings(root.get("buildings"));
+		loadVehicles(root.get("vehicles"));
 
 		this.economy = null;
 		return economy;
@@ -96,6 +98,20 @@ public class EconomyLoader {
 		building.read(Assets.json, node);
 		economy.buildings.put(building.id, building);
 		Gdx.app.log("EconomyLoader", "Loaded: " + building);
+	}
+	
+	private void loadVehicles(JsonValue node) {
+		node = node.child;
+		while (node != null) {
+			loadVehicle(node);
+			node = node.next;
+		}
+	}
+	
+	private void loadVehicle(JsonValue node) {
+		Vehicle vehicle = new Vehicle(economy);
+		vehicle.read(Assets.json, node);
+		economy.vehicles.put(vehicle.id, vehicle);
 	}
 
 }

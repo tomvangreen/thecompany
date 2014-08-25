@@ -84,4 +84,47 @@
 			, educations:[lumberjackTraining]
 		}
 	}
+	, vehicles: {
+		transporterCar: {
+			label: "Transporter Car"
+			, cost: [
+				{lumber: 50}
+			]
+			, weight: 10
+			
+			, speed: 10
+			, storageCapacity: 50
+			, allowedGoods: ["General", "Weapons", "Food", "BuildingMaterial"]
+			, passableTerrains: ["Plains", "Woods", "Hills", "Beach"]
+			, fightForce: 1
+			, workForce: 1
+			, lineOfSight: 1
+		}
+		, transporterShip: {
+			label: "Transporter Ship"
+			, cost: [
+				{lumber: 50}
+			]
+			, weight: 100
+			, speed: 20
+			, storageCapacity: 500
+			, allowedGoods: ["General", "Weapons", "Food", "BuildingMaterial"]
+			, passableTerrains: ["Sea", "Coast"]
+			, fightForce: 1
+			, workForce: 1
+			, lineOfSight: 1
+		}
+		, groundTroop: {
+			label: "Transporter Ship"
+			, cost: []
+			, weight: 0
+			, speed: 1
+			, storageCapacity: 1
+			, allowedGoods: ["Weapons", "Food"]
+			, passableTerrains: ["Sea", "Coast"]
+			, fightForce: 1
+			, workForce: 1
+			, lineOfSight: 1
+		}
+	}
 }
