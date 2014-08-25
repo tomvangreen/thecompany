@@ -3,6 +3,8 @@ package ch.digitalmeat.company.game;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.digitalmeat.company.level.Tile;
+
 public class Company {
 	public int id;
 	public String name;
@@ -21,5 +23,9 @@ public class Company {
 		for (Expedition expedition : expeditions) {
 			expedition.tick();
 		}
+	}
+
+	public void claim(Tile tile) {
+		tile.company = this;
 	}
 }

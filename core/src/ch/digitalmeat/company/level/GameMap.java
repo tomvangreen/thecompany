@@ -7,6 +7,7 @@ import ch.digitalmeat.company.game.Company;
 import ch.digitalmeat.company.game.Settlement;
 import ch.digitalmeat.company.game.Settlement.SettlementType;
 import ch.digitalmeat.company.game.economy.Economy;
+import ch.digitalmeat.company.level.DistanceTileMatcher.DistanceFunction;
 
 import com.badlogic.gdx.graphics.Texture;
 
@@ -61,7 +62,7 @@ public class GameMap {
 	public Settlement createSettlement(SettlementType type, List<Tile> tiles, Company company) {
 		validateTilesForSettlement(tiles);
 
-		Settlement settlement = new Settlement(SettlementType.City, company);
+		Settlement settlement = new Settlement(this, SettlementType.City, company);
 		settlement.addTiles(tiles);
 		settlements.add(settlement);
 
@@ -87,6 +88,19 @@ public class GameMap {
 	public void tick() {
 		for (Company company : companies) {
 			company.tick();
+		}
+	}
+
+	private final List<Tile> temp = new ArrayList<Tile>();
+	private final DistanceTileMatcher distanceMatcher = new DistanceTileMatcher();
+
+	public void claim(Tile tile, Company owner, float distance) {
+		distanceMatcher.setTile(tile);
+		distanceMatcher.setDistance(distance);
+		distanceMatcher.setFunction(DistanceFunction.Manhattan);
+		floodFill(temp, tile, distanceMatcher);
+		for (Tile candidate : temp) {
+
 		}
 	}
 }

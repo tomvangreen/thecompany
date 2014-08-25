@@ -5,11 +5,13 @@ import java.util.Collection;
 import java.util.List;
 
 import ch.digitalmeat.company.game.economy.Building;
+import ch.digitalmeat.company.level.GameMap;
 import ch.digitalmeat.company.level.Tile;
 
 import com.badlogic.gdx.Gdx;
 
 public class Settlement {
+	public final GameMap map;
 	public final Company owner;
 	public final SettlementType type;
 	private final List<BuildingInstance> buildings = new ArrayList<BuildingInstance>();
@@ -17,7 +19,8 @@ public class Settlement {
 	private float availableArea = 0;
 	private float usedArea = 0;
 
-	public Settlement(SettlementType type, Company owner) {
+	public Settlement(GameMap map, SettlementType type, Company owner) {
+		this.map = map;
 		this.type = type;
 		this.owner = owner;
 		if (owner != null) {
@@ -44,6 +47,9 @@ public class Settlement {
 	public void addTile(Tile tile) {
 		tiles.add(tile);
 		availableArea += tile.type.buildableArea;
+		for (Tile claimTile : tiles) {
+			map.claim(tile, owner, tiles.size() + 1);
+		}
 	}
 
 	public void addTiles(Collection<Tile> tiles) {
