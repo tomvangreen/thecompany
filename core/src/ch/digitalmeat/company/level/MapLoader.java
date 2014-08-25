@@ -3,15 +3,18 @@ package ch.digitalmeat.company.level;
 import ch.digitalmeat.company.Assets;
 import ch.digitalmeat.company.Constants;
 import ch.digitalmeat.company.game.Company;
+import ch.digitalmeat.company.game.economy.Economy;
+import ch.digitalmeat.company.game.economy.EconomyLoader;
 import ch.digitalmeat.company.level.Tile.TerrainType;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.JsonValue;
 
 public class MapLoader {
 	private final TerrainLayerLoader terrainLoader = new TerrainLayerLoader();
-	
+	private EconomyLoader economyLoader = new EconomyLoader();
 	private final SettlementsLoader settlementsLoader = new SettlementsLoader();
 	
 	private final TerritoryLoader territoryLoader = new TerritoryLoader();
@@ -22,7 +25,14 @@ public class MapLoader {
 		if (levelTexture == null) {
 			throw new RuntimeException("Main level image has not been found: " + levelName);
 		}
-		GameMap map = new GameMap(levelTexture);
+		String economyFile = levelNameWithoutExtension + ".json";
+		JsonValue value = Assets.parseJsonFile(economyFile);
+		Economy economy = economyLoader.load(value);
+		if (value == null) {
+			throw new RuntimeException("Could not open level economy file.");
+		}
+
+		GameMap map = new GameMap(levelTexture, economy);
 		loadTerrains(levelNameWithoutExtension, map);
 		
 		loadTerritories(levelNameWithoutExtension, map);
