@@ -1,5 +1,8 @@
 package ch.digitalmeat.company;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ch.digitalmeat.company.level.GameMap;
 import ch.digitalmeat.company.level.loader.MapLoader;
 
@@ -25,6 +28,8 @@ public class Assets {
 
 	public static Skin skin;
 
+	private final static List<String> cities = new ArrayList<String>();
+
 	public static void create() {
 		mapLoader = new MapLoader();
 		skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
@@ -34,6 +39,16 @@ public class Assets {
 		controlPlay = new TextureRegion(controls, 8, 0, 8, 8);
 		controlFast = new TextureRegion(controls, 16, 0, 8, 8);
 		controlUltraFast = new TextureRegion(controls, 24, 0, 8, 8);
+		String cityNames = Gdx.files.internal("cities.txt").readString();
+		String[] names = cityNames.split("\n");
+		for (String name : names) {
+			name = name.replace("\r", "");
+			cities.add(name);
+		}
+	}
+
+	public static List<String> getCityNames() {
+		return new ArrayList<String>(cities);
 	}
 
 	public static boolean fileExists(String path) {

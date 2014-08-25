@@ -2,7 +2,9 @@ package ch.digitalmeat.company.level;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
+import ch.digitalmeat.company.Assets;
 import ch.digitalmeat.company.game.Company;
 import ch.digitalmeat.company.game.Settlement;
 import ch.digitalmeat.company.game.Settlement.SettlementType;
@@ -60,10 +62,25 @@ public class GameMap {
 		}
 	}
 
+	private List<String> cityNames;
+
+	private Random random = new Random();
+
+	public String pickCityName() {
+		if (cityNames == null || cityNames.size() == 0) {
+			cityNames = Assets.getCityNames();
+		}
+		int pick = 0;
+		if (cityNames.size() > 1) {
+			pick = random.nextInt(cityNames.size());
+		}
+		return cityNames.remove(pick);
+	}
+
 	public Settlement createSettlement(SettlementType type, List<Tile> tiles, Company company) {
 		validateTilesForSettlement(tiles);
 
-		Settlement settlement = new Settlement(this, SettlementType.City, company, "Town " + (settlements.size() + 1));
+		Settlement settlement = new Settlement(this, SettlementType.City, company, pickCityName());
 		settlement.addTiles(tiles);
 		settlements.add(settlement);
 
