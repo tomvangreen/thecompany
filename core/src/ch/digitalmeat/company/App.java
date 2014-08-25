@@ -1,9 +1,14 @@
 package ch.digitalmeat.company;
 
 import ch.digitalmeat.company.event.AppEvent;
+import ch.digitalmeat.company.event.EventQueue;
 import ch.digitalmeat.company.event.Events;
+import ch.digitalmeat.company.event.TileSelectedEvent;
+import ch.digitalmeat.company.event.TileSelectedEvent.TileSelectedEventListener;
 import ch.digitalmeat.company.gfx.Stages;
 import ch.digitalmeat.company.level.GameMap;
+import ch.digitalmeat.company.level.Tile;
+import ch.digitalmeat.company.ui.GameUIBuilder;
 import ch.digitalmeat.company.ui.UIBuilder;
 
 import com.badlogic.gdx.ApplicationAdapter;
@@ -11,7 +16,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class App extends ApplicationAdapter {
+public class App extends ApplicationAdapter implements TileSelectedEventListener {
 	private SpriteBatch batch;
 	private GameMap map;
 	public Stages stages;
@@ -19,7 +24,9 @@ public class App extends ApplicationAdapter {
 
 	@Override
 	public void create() {
-		Events.factory.getQueue().listen(AppEvent.class, this);
+		EventQueue queue = Events.factory.getQueue();
+		queue.listen(AppEvent.class, this);
+		queue.listen(TileSelectedEvent.class, this);
 		Assets.create();
 		batch = new SpriteBatch();
 		stages = new Stages(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
@@ -66,5 +73,17 @@ public class App extends ApplicationAdapter {
 		stages.ui.clear();
 		stages.loadMap(map);
 		uiBuilder.createGameUI(map);
+	}
+
+	@Override
+	public void tileSelected(int x, int y) {
+		if (map != null) {
+			Tile tile = map.tile(x, y);
+			if (tile != null && tile.settlement != null) {
+				uiBuilder.gameUI.setSelectionItem(tile.settlement);
+			} else {
+				uiBuilder.gameUI.setSelectionItem(GameUIBuilder.EMPTY);
+			}
+		}
 	}
 }

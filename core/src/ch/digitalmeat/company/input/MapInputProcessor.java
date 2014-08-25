@@ -50,11 +50,12 @@ public class MapInputProcessor implements InputProcessor {
 			camPosition.set(cam.position.x, cam.position.y);
 			return true;
 		}
-		
-		if(button == Buttons.LEFT && leftClickPointer < 0) {
+
+		if (button == Buttons.LEFT && leftClickPointer < 0) {
 			leftClickPointer = pointer;
 			cam.unproject(screenCoords.set(screenX, screenY, 0));
-			Events.factory.selectTile((int)screenCoords.x, (int)screenCoords.y);
+			// TODO: Check if this works
+			Events.factory.selectTile((int) screenCoords.x, (int) screenCoords.y + 1);
 		}
 		return false;
 	}
@@ -67,7 +68,7 @@ public class MapInputProcessor implements InputProcessor {
 			rightClickPointer = -1;
 			return true;
 		}
-		
+
 		if (button == Buttons.LEFT) {
 			leftClickPointer = -1;
 			return true;

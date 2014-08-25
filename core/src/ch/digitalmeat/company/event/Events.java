@@ -3,6 +3,7 @@ package ch.digitalmeat.company.event;
 import ch.digitalmeat.company.event.AppEvent.AppEventType;
 import ch.digitalmeat.company.hint.Hint;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 public class Events {
@@ -52,12 +53,13 @@ public class Events {
 	public Events cam(float zoom) {
 		return cam(null, false);
 	}
-	
+
 	public Events selectTile(int x, int y) {
 		TileSelectedEvent event = new TileSelectedEvent();
 		event.x = x;
 		event.y = y;
 		queue.queue(event);
+		Gdx.app.log("Select Tile", x + "/" + y);
 		return this;
 	}
 
