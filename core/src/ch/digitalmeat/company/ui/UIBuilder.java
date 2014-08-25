@@ -26,5 +26,7 @@ public class UIBuilder {
 		Gdx.app.log("UI", "Create Game UI");
 		stages.ui.clear();
 		gameUI.build(map);
+
+		gameUI.setSelectionItem(map.getSettlements().get(0), map.getSettlements().get(1));
 	}
 }

@@ -62,7 +62,7 @@ public class GameMap {
 	public Settlement createSettlement(SettlementType type, List<Tile> tiles, Company company) {
 		validateTilesForSettlement(tiles);
 
-		Settlement settlement = new Settlement(this, SettlementType.City, company);
+		Settlement settlement = new Settlement(this, SettlementType.City, company, "Town " + (settlements.size() + 1));
 		settlement.addTiles(tiles);
 		settlements.add(settlement);
 

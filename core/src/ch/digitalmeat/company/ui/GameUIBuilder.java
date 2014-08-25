@@ -3,6 +3,9 @@ package ch.digitalmeat.company.ui;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.color;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
+
+import java.util.Collection;
+
 import ch.digitalmeat.company.Assets;
 import ch.digitalmeat.company.Colors;
 import ch.digitalmeat.company.Constants;
@@ -13,9 +16,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.utils.Array;
 
 public class GameUIBuilder {
 
@@ -23,6 +28,8 @@ public class GameUIBuilder {
 
 	private Table sidePanel;
 	private Table infoBar;
+
+	public SelectBox<InfoBarItem> itemSelector;
 
 	public GameUIBuilder(Stage stage) {
 		this.stage = stage;
@@ -43,7 +50,9 @@ public class GameUIBuilder {
 
 		sidePanel = new Table(Assets.skin);
 		sidePanel.setBackground(background);
-		sidePanel.add("Yay");
+		itemSelector = new SelectBox<InfoBarItem>(Assets.skin, "info");
+		sidePanel.add(itemSelector).fillX().expandX().row();
+		sidePanel.add("Yay").expandY();
 		table.add(infoBar).expandX().fillX().align(Align.top | Align.left);
 		// table.add().expand();
 		table.add(sidePanel).prefWidth(Constants.SIDEPANEL_WIDTH).expandY().fill();
@@ -56,6 +65,30 @@ public class GameUIBuilder {
 				Gdx.app.log("UI", "Parent Alpha: " + parent);
 			}
 		});
+	}
+
+	public void setSelectionItems(Collection<InfoBarItem> items) {
+		Array<InfoBarItem> newItems = new Array<InfoBarItem>();
+		for (InfoBarItem item : items) {
+			newItems.add(item);
+		}
+		itemSelector.setItems(newItems);
+	}
+
+	public void setSelectionItem(InfoBarItem item) {
+		Array<InfoBarItem> newItems = new Array<InfoBarItem>();
+		newItems.add(item);
+		itemSelector.setItems(newItems);
+	}
+
+	public void setSelectionItem(InfoBarItem... items) {
+		Array<InfoBarItem> newItems = new Array<InfoBarItem>();
+		newItems.addAll(items);
+		itemSelector.setItems(newItems);
+	}
+
+	public static interface InfoBarItem {
+		public String getLabel();
 	}
 
 	private void fadeIn(Actor actor, float delayTime, float fadeTime) {

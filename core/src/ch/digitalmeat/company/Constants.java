@@ -12,7 +12,7 @@ public class Constants {
 
 	public static final String SETTLEMENTS_FILE_EXTENSION = "Cities";
 	public static final String TERRITORY_FILE_EXTENSION = "Territory-player";
-	public static final float SIDEPANEL_WIDTH = 60;
+	public static final float SIDEPANEL_WIDTH = 80;
 
 	public static final float TERRITORY_LAYER_ALPHA = 0.5f;
 }
