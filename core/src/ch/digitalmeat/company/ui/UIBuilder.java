@@ -28,5 +28,6 @@ public class UIBuilder {
 		gameUI.build(map);
 
 		gameUI.setSelectionItem(map.getSettlements().get(0), map.getSettlements().get(1));
+		// gameUI.setSelectionItem(GameUIBuilder.EMPTY);
 	}
 }
