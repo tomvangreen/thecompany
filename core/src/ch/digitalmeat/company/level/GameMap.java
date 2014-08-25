@@ -3,15 +3,19 @@ package ch.digitalmeat.company.level;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.digitalmeat.company.event.Events;
+import ch.digitalmeat.company.event.TileSelectedEvent;
+import ch.digitalmeat.company.event.TileSelectedEvent.TileSelectedEventListener;
 import ch.digitalmeat.company.game.Company;
 import ch.digitalmeat.company.game.Settlement;
 import ch.digitalmeat.company.game.Settlement.SettlementType;
 import ch.digitalmeat.company.game.economy.Economy;
 import ch.digitalmeat.company.level.DistanceTileMatcher.DistanceFunction;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
-public class GameMap {
+public class GameMap implements TileSelectedEventListener {
 	public final Economy economy;
 	public final Texture texture;
 	public final int width;
@@ -34,6 +38,8 @@ public class GameMap {
 				tiles.add(new Tile(this, x, y));
 			}
 		}
+		
+		Events.factory.getQueue().listen(TileSelectedEvent.class, this);
 	}
 
 	public Tile tile(int x, int y) {
@@ -44,7 +50,7 @@ public class GameMap {
 	}
 
 	public boolean areCoordinatesValid(int x, int y) {
-		return x > 0 && x < width && y > 0 && y < height;
+		return x >= 0 && x < width && y >= 0 && y < height;
 	}
 
 	public void floodFill(List<Tile> results, Tile tile, TileMatcher matcher) {
@@ -107,4 +113,10 @@ public class GameMap {
 			company.claim(candidate);
 		}
 	}
+
+	@Override
+	public void tileSelected(int x, int y) {
+		Gdx.app.log(getClass().getSimpleName(), "selected tile" + tile(x,y));
+	}
+
 }

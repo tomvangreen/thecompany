@@ -52,6 +52,14 @@ public class Events {
 	public Events cam(float zoom) {
 		return cam(null, false);
 	}
+	
+	public Events selectTile(int x, int y) {
+		TileSelectedEvent event = new TileSelectedEvent();
+		event.x = x;
+		event.y = y;
+		queue.queue(event);
+		return this;
+	}
 
 	public Events app(AppEventType type) {
 		AppEvent event = new AppEvent();

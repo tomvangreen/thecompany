@@ -3,9 +3,11 @@ package ch.digitalmeat.company.input;
 import ch.digitalmeat.company.Constants;
 import ch.digitalmeat.company.event.Events;
 
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MapInputProcessor implements InputProcessor {
@@ -13,8 +15,10 @@ public class MapInputProcessor implements InputProcessor {
 	private final OrthographicCamera cam;
 
 	private int rightClickPointer = -1;
-	private Vector2 clickPosition = new Vector2();
+	private int leftClickPointer = -1;
+	private Vector2 rightClickPosition = new Vector2();
 	private Vector2 camPosition = new Vector2();
+	private Vector3 screenCoords = new Vector3();
 
 	private Viewport viewport;
 
@@ -40,11 +44,17 @@ public class MapInputProcessor implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		if (button == 1) {
+		if (button == Buttons.RIGHT) {
 			rightClickPointer = pointer;
-			clickPosition.set(screenX, screenY);
+			rightClickPosition.set(screenX, screenY);
 			camPosition.set(cam.position.x, cam.position.y);
 			return true;
+		}
+		
+		if(button == Buttons.LEFT && leftClickPointer < 0) {
+			leftClickPointer = pointer;
+			cam.unproject(screenCoords.set(screenX, screenY, 0));
+			Events.factory.selectTile((int)screenCoords.x, (int)screenCoords.y);
 		}
 		return false;
 	}
@@ -53,8 +63,13 @@ public class MapInputProcessor implements InputProcessor {
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		if (button == 1) {
+		if (button == Buttons.RIGHT) {
 			rightClickPointer = -1;
+			return true;
+		}
+		
+		if (button == Buttons.LEFT) {
+			leftClickPointer = -1;
 			return true;
 		}
 		return false;
@@ -64,7 +79,7 @@ public class MapInputProcessor implements InputProcessor {
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		if (pointer == rightClickPointer) {
 			// TODO: The scale is based on the screen scaling. extract that
-			v.set(screenX, screenY).sub(clickPosition);
+			v.set(screenX, screenY).sub(rightClickPosition);
 			float scaleX = viewport.getWorldWidth() / viewport.getViewportWidth();
 			float scaleY = viewport.getWorldWidth() / viewport.getViewportWidth();
 			v.scl(-scaleX, scaleY).scl(cam.zoom).add(camPosition);
