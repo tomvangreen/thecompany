@@ -61,8 +61,8 @@ public class Stages implements CameraEventListener {
 	}
 
 	public void resize(int width, int height) {
-		gameViewport.update(width, height);
-		uiViewport.update(width, height);
+		game.getViewport().update(width, height, false);
+		ui.getViewport().update(width, height, false);
 	}
 
 	public void update(float deltaTime) {

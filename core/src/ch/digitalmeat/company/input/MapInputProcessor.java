@@ -51,9 +51,11 @@ public class MapInputProcessor implements InputProcessor {
 			return true;
 		}
 
+		Vector2 hgutter = new Vector2();
+		Vector2 vgutter = new Vector2();
+
 		if (button == Buttons.LEFT && leftClickPointer < 0) {
-			leftClickPointer = pointer;
-			cam.unproject(screenCoords.set(screenX, screenY, 0));
+			viewport.unproject(screenCoords.set(screenX, screenY, 0));
 			// TODO: Check if this works
 			Events.factory.selectTile((int) screenCoords.x, (int) screenCoords.y + 1);
 		}
