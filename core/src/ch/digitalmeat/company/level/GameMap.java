@@ -17,6 +17,8 @@ public class GameMap {
 	public final int height;
 
 	private List<Tile> tiles = new ArrayList<Tile>();
+	
+	private List<Settlement> settlements = new ArrayList<Settlement>();
 
 	public GameMap(Texture texture, Economy economy) {
 		this.economy = economy;
@@ -43,7 +45,7 @@ public class GameMap {
 	}
 
 	public void floodFill(List<Tile> results, Tile tile, TileMatcher matcher) {
-		if (matcher.matches(tile)) {
+		if (!results.contains(tile) && matcher.matches(tile)) {
 			results.add(tile);
 			for (Direction direction : Direction.values()) {
 				Tile neighbour = tile.neighbour(direction);
@@ -55,6 +57,26 @@ public class GameMap {
 	}
 
 	public Settlement createSettlement(SettlementType type, List<Tile> tiles, Company company) {
-		return null;
+		for(Tile tile : tiles) {
+			if(tile.settlement != null) {
+				throw new IllegalArgumentException("Tile already has a settlement");
+			}
+		}
+		
+		Settlement settlement = new Settlement();
+		settlement.tiles = tiles;
+		settlement.owner = company;
+		
+		for(Tile tile : tiles) {
+			tile.settlement = settlement;
+		}
+		
+		settlements.add(settlement);
+		return settlement;
 	}
+
+	public List<Settlement> getSettlements() {
+		return settlements;
+	}
+	
 }
