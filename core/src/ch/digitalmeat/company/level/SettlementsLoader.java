@@ -4,40 +4,44 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.digitalmeat.company.game.Settlement.SettlementType;
-import ch.digitalmeat.company.level.GameMap.TileMatcher;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 
 public class SettlementsLoader extends LayerLoader {
-	private List<Tile> tiles = new ArrayList<Tile>();
 
+	private final TileListTileMatcher matcher = new TileListTileMatcher();
+	
 	private List<Tile> result = new ArrayList<Tile>();
 	
 	private GameMap map;
 
 	@Override
 	protected void beforeLoad() {
-		tiles.clear();
+		matcher.list.clear();
 	}
 
 	@Override
 	protected void handleTile(Tile tile, int pixel, Color color, int mapX, int mapY, int pixmapX, int pixmapY) {
 		if (color.a > 0) {
-			tiles.add(tile);
+			matcher.list.add(tile);
 		}
 	}
 
 	@Override
 	protected void afterLoad() {
-		while(tiles.size() > 0) {
-			Tile tile = tiles.get(0);
+		
+		while(matcher.list.size() > 0) {
+			Tile tile = matcher.list.get(0);
 			result.clear();
-			map.floodFill(result, tile, null);
+			map.floodFill(result, tile, matcher);
 			map.createSettlement(SettlementType.City, result, null);
-			tiles.removeAll(result);
+			matcher.list.removeAll(result);
 			
 		}
-		tiles.clear();
+		
+		Gdx.app.log(SettlementsLoader.class.getSimpleName(), "created " + map.getSettlements().size() + " settlements");
+		matcher.list.clear();
 	}
 
 	public GameMap getMap() {

@@ -15,6 +15,8 @@ public class GameMap {
 	public final int height;
 
 	private List<Tile> tiles = new ArrayList<Tile>();
+	
+	private List<Settlement> settlements = new ArrayList<Settlement>();
 
 	public GameMap(Texture texture) {
 		this.texture = texture;
@@ -52,9 +54,26 @@ public class GameMap {
 	}
 
 	public Settlement createSettlement(SettlementType type, List<Tile> tiles, Company company) {
+		for(Tile tile : tiles) {
+			if(tile.settlement != null) {
+				throw new IllegalArgumentException("Tile already has a settlement");
+			}
+		}
+		
 		Settlement settlement = new Settlement();
 		settlement.tiles = tiles;
 		settlement.owner = company;
+		
+		for(Tile tile : tiles) {
+			tile.settlement = settlement;
+		}
+		
+		settlements.add(settlement);
 		return settlement;
 	}
+
+	public List<Settlement> getSettlements() {
+		return settlements;
+	}
+	
 }
