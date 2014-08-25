@@ -6,17 +6,20 @@ import java.util.List;
 import ch.digitalmeat.company.game.Company;
 import ch.digitalmeat.company.game.Settlement;
 import ch.digitalmeat.company.game.Settlement.SettlementType;
+import ch.digitalmeat.company.game.economy.Economy;
 
 import com.badlogic.gdx.graphics.Texture;
 
 public class GameMap {
+	public final Economy economy;
 	public final Texture texture;
 	public final int width;
 	public final int height;
 
 	private List<Tile> tiles = new ArrayList<Tile>();
 
-	public GameMap(Texture texture) {
+	public GameMap(Texture texture, Economy economy) {
+		this.economy = economy;
 		this.texture = texture;
 		this.width = texture.getWidth();
 		this.height = texture.getHeight();
