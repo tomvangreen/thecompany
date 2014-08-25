@@ -32,6 +32,8 @@ public class GameUIBuilder implements EventListener {
 
 	public SelectBox<InfoBarItem> itemSelector;
 
+	private Table sideContent;
+
 	public GameUIBuilder(Stage stage) {
 		this.stage = stage;
 	}
@@ -54,7 +56,9 @@ public class GameUIBuilder implements EventListener {
 		itemSelector = new SelectBox<InfoBarItem>(Assets.skin, "info");
 		itemSelector.addListener(this);
 		sidePanel.add(itemSelector).fillX().expandX().row();
-		sidePanel.add("Yay").expandY();
+
+		sideContent = new Table(Assets.skin);
+		sidePanel.add(sideContent).pad(3).expandY().fill();
 		table.add(infoBar).expandX().fillX().align(Align.top | Align.left);
 		// table.add().expand();
 		table.add(sidePanel).prefWidth(Constants.SIDEPANEL_WIDTH).expandY().fill();
@@ -87,7 +91,9 @@ public class GameUIBuilder implements EventListener {
 	}
 
 	public void updateInfoPanel(InfoBarItem item) {
-
+		sideContent.clearChildren();
+		sideContent.add(item.getLabel()).align(Align.left | Align.top).row();
+		sideContent.add().expand();
 	}
 
 	private void fadeIn(Actor actor, float delayTime, float fadeTime) {
