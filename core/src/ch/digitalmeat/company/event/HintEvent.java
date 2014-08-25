@@ -1,7 +1,7 @@
 package ch.digitalmeat.company.event;
 
 import ch.digitalmeat.company.event.HintEvent.HintEventListener;
-import ch.digitalmeat.company.ui.Hint;
+import ch.digitalmeat.company.hint.Hint;
 
 public class HintEvent implements GameEvent<HintEventListener> {
 
