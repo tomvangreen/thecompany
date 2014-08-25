@@ -2,11 +2,11 @@ package ch.digitalmeat.company.gfx;
 
 import ch.digitalmeat.company.Assets;
 import ch.digitalmeat.company.Colors;
+import ch.digitalmeat.company.Constants;
 import ch.digitalmeat.company.game.Company;
 import ch.digitalmeat.company.level.GameMap;
 import ch.digitalmeat.company.level.Tile;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -44,6 +44,9 @@ public class MapRenderer extends Actor {
 	private void renderTerritories(Batch batch, float parentAlpha) {
 		for(Company company : map.getCompanies()) {
 			renderColor.set(Colors.companyColors.get(company.id));
+			renderColor.a = Constants.TERRITORY_LAYER_ALPHA * parentAlpha;
+			batch.setColor(renderColor);
+			
 			if(company.renderTerritory) {
 				for(Tile tile : company.territory) {
 					batch.draw(Assets.whitePixel, tile.x, tile.y);
