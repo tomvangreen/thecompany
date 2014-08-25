@@ -1,6 +1,5 @@
 package ch.digitalmeat.company.level;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 public class DistanceTileMatcher implements TileMatcher {
@@ -14,7 +13,7 @@ public class DistanceTileMatcher implements TileMatcher {
 			return false;
 		}
 		float otherDistance = function.getDistance(tile, other);
-		Gdx.app.log("DistanceTileMatcher", "" + otherDistance);
+		// Gdx.app.log("DistanceTileMatcher", "" + otherDistance);
 		return otherDistance <= distance;
 	}
 

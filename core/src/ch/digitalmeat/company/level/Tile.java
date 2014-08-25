@@ -1,7 +1,7 @@
 package ch.digitalmeat.company.level;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import ch.digitalmeat.company.game.Company;
 import ch.digitalmeat.company.game.Settlement;
@@ -16,7 +16,7 @@ public class Tile {
 
 	public Company company;
 
-	public final Set<Integer> visibleFor = new HashSet<Integer>();
+	public final List<Company> visibleFor = new ArrayList<Company>();
 
 	public Tile(GameMap map, int x, int y) {
 		this.map = map;
@@ -59,6 +59,5 @@ public class Tile {
 	public String toString() {
 		return "Tile(" + x + "," + y + ")";
 	}
-	
-	
+
 }

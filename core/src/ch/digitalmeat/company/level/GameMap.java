@@ -132,4 +132,8 @@ public class GameMap {
 	public long getTick() {
 		return ticks;
 	}
+
+	public List<Tile> getTiles() {
+		return tiles;
+	}
 }
