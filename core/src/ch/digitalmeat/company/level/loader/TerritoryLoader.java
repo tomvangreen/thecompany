@@ -11,8 +11,7 @@ public class TerritoryLoader extends LayerLoader {
 	@Override
 	protected void handleTile(Tile tile, int pixel, Color color, int mapX, int mapY, int pixmapX, int pixmapY) {
 		if (color.a > 0) {
-			company.territory.add(tile);
-			tile.company = this.company;
+			company.claim(tile);
 		}
 	}
 
