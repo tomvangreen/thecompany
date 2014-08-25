@@ -13,7 +13,7 @@ public class Tile {
 
 	public TerrainType type = TerrainType.Sea;
 	public Settlement settlement;
-	
+
 	public Company company;
 
 	public final Set<Integer> visibleFor = new HashSet<Integer>();
@@ -30,13 +30,13 @@ public class Tile {
 
 	public static enum TerrainType {
 		//@formatter:off
-		Sea(0, false, 2f, "sea")
-		, Coast(1, false, 1f, "coast")
-		, Beach(2, true, 2f, "beach")
-		, Plains(3, true, 1f, "plains")
-		, Woods(4, true, 4f, "woods")
-		, Hills(5, true, 6f, "hills")
-		, Mountains(6, true, 20f, "mountains") 
+		Sea(0, false, 2f, "sea", 0f)
+		, Coast(1, false, 1f, "coast", 0f)
+		, Beach(2, true, 2f, "beach", 5f)
+		, Plains(3, true, 1f, "plains", 20f)
+		, Woods(4, true, 4f, "woods", 10f)
+		, Hills(5, true, 6f, "hills", 15f)
+		, Mountains(6, true, 20f, "mountains", 5f) 
 		;
 		//@formatter:on
 
@@ -44,12 +44,14 @@ public class Tile {
 		public final boolean isLand;
 		public final float pathCost;
 		public final String levelExtension;
+		public final float buildableArea;
 
-		TerrainType(int index, boolean isLand, float pathCost, String levelExtension) {
+		TerrainType(int index, boolean isLand, float pathCost, String levelExtension, float buildableArea) {
 			this.index = index;
 			this.isLand = isLand;
 			this.pathCost = pathCost;
 			this.levelExtension = levelExtension;
+			this.buildableArea = buildableArea;
 		}
 	}
 }

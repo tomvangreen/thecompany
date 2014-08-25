@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.JsonValue;
 
 public class Building extends EconomyItem {
 	public float cost;
+	public float area;
 	public List<IndustryProcess> processes = new ArrayList<IndustryProcess>();
 	public List<Education> educations = new ArrayList<Education>();
 	public List<Effect> effects = new ArrayList<Effect>();
