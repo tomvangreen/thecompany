@@ -25,6 +25,7 @@ public class Assets {
 	public static TextureRegion controlPlay;
 	public static TextureRegion controlFast;
 	public static TextureRegion controlUltraFast;
+	public static TextureRegion controlTerritories;
 
 	public static Skin skin;
 
@@ -39,6 +40,7 @@ public class Assets {
 		controlPlay = new TextureRegion(controls, 8, 0, 8, 8);
 		controlFast = new TextureRegion(controls, 16, 0, 8, 8);
 		controlUltraFast = new TextureRegion(controls, 24, 0, 8, 8);
+		controlTerritories = new TextureRegion(controls, 32, 0, 8, 8);
 		String cityNames = Gdx.files.internal("cities.txt").readString();
 		String[] names = cityNames.split("\n");
 		for (String name : names) {

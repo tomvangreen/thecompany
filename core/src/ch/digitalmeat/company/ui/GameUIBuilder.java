@@ -49,6 +49,7 @@ public class GameUIBuilder implements EventListener {
 	private TriggerEventListener controlPlayListener = new TriggerEventListener(new GameSpeedTrigger(GameSpeed.Normal));
 	private TriggerEventListener controlFastListener = new TriggerEventListener(new GameSpeedTrigger(GameSpeed.Fast));
 	private TriggerEventListener controlUltraListener = new TriggerEventListener(new GameSpeedTrigger(GameSpeed.Ultra));
+	public final TriggerEventListener controlTerritoriesListener = new TriggerEventListener(new AppEventTrigger(AppEventType.ToggleTerritories));
 
 	public SelectBox<InfoBarItem> itemSelector;
 
@@ -83,6 +84,7 @@ public class GameUIBuilder implements EventListener {
 		infoBar.add(controlButton(Assets.controlPlay, controlPlayListener));
 		infoBar.add(controlButton(Assets.controlFast, controlFastListener));
 		infoBar.add(controlButton(Assets.controlUltraFast, controlUltraListener));
+		infoBar.add(controlButton(Assets.controlTerritories, controlTerritoriesListener));
 		infoBar.add().expandX();
 		day = new Label("Day 1", Assets.skin);
 		time = new Label("0:00", Assets.skin);
