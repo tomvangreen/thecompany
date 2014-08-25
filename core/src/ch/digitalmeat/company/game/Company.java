@@ -10,7 +10,7 @@ import com.badlogic.gdx.Gdx;
 public class Company {
 	public int id;
 	public String name;
-	public boolean renderTerritory;
+	public boolean renderTerritory = true;
 
 	public final List<Settlement> settlements = new ArrayList<Settlement>();
 
