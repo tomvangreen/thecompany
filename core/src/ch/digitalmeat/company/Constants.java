@@ -11,4 +11,5 @@ public class Constants {
 	public static final float CAM_ZOOM_STEP = 0.5f;
 	
 	public static final String SETTLEMENTS_FILE_EXTENSION = "Cities";
+	public static final String TERRITORY_FILE_EXTENSION = "Territory-player";
 }

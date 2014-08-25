@@ -3,6 +3,7 @@ package ch.digitalmeat.company.level;
 import java.util.HashSet;
 import java.util.Set;
 
+import ch.digitalmeat.company.game.Company;
 import ch.digitalmeat.company.game.Settlement;
 
 public class Tile {
@@ -12,6 +13,8 @@ public class Tile {
 
 	public TerrainType type = TerrainType.Sea;
 	public Settlement settlement;
+	
+	public Company company;
 
 	public final Set<Integer> visibleFor = new HashSet<Integer>();
 

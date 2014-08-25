@@ -19,6 +19,8 @@ public class GameMap {
 	private List<Tile> tiles = new ArrayList<Tile>();
 	
 	private List<Settlement> settlements = new ArrayList<Settlement>();
+	
+	private List<Company> companies = new ArrayList<Company>();
 
 	public GameMap(Texture texture, Economy economy) {
 		this.economy = economy;
@@ -77,6 +79,10 @@ public class GameMap {
 
 	public List<Settlement> getSettlements() {
 		return settlements;
+	}
+
+	public List<Company> getCompanies() {
+		return companies;
 	}
 	
 }
