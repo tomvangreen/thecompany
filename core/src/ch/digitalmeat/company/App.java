@@ -43,6 +43,8 @@ public class App extends ApplicationAdapter implements TileSelectedEventListener
 		uiBuilder.createMainMenu();
 	}
 
+	boolean positionedCam = false;
+
 	public void startGame(boolean endless) {
 		stages.fadeOut(new Runnable() {
 			@Override
@@ -57,6 +59,11 @@ public class App extends ApplicationAdapter implements TileSelectedEventListener
 	@Override
 	public void render() {
 		Events.factory.getQueue().dispatch();
+
+		if (map != null && !positionedCam) {
+			Events.factory.cam(0.2f, true);
+			positionedCam = true;
+		}
 
 		// Update
 		float deltaTime = Gdx.graphics.getDeltaTime();
@@ -97,10 +104,12 @@ public class App extends ApplicationAdapter implements TileSelectedEventListener
 		stages.ui.clear();
 		stages.loadMap(map);
 		uiBuilder.createGameUI(map);
+		positionedCam = false;
+
 		Settlement s = map.getCompanies().get(0).getSettlements().get(0);
 		Tile tile = s.tiles().get(0);
 		v.set(tile.x, tile.y);
-		Events.factory.cam(v, 0.25f, true, true, true);
+		Events.factory.cam(v, false);
 	}
 
 	@Override
@@ -130,6 +139,10 @@ public class App extends ApplicationAdapter implements TileSelectedEventListener
 			changeSpeed(GameSpeed.Pause);
 		}
 
+	}
+
+	public void toggleTerritories() {
+		stages.mapRenderer.toggleTerritories();
 	}
 
 }

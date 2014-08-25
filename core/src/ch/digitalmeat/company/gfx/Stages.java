@@ -75,6 +75,7 @@ public class Stages implements CameraEventListener {
 	}
 
 	private Vector2 v = new Vector2();
+	public MapRenderer mapRenderer;
 
 	private void updateGameCam(float deltaTime) {
 		if (camTarget != null) {
@@ -96,7 +97,8 @@ public class Stages implements CameraEventListener {
 		unloadMap();
 		this.map = map;
 		game.clear();
-		game.addActor(new MapRenderer(map));
+		mapRenderer = new MapRenderer(map);
+		game.addActor(mapRenderer);
 		game.addAction(Actions.fadeIn(1f));
 		ui.addAction(Actions.fadeIn(1f));
 	}

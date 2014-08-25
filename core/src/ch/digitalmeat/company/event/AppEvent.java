@@ -21,12 +21,15 @@ public class AppEvent implements GameEvent<App> {
 		case SpeedToggle:
 			listener.toggleSpeed();
 			break;
+		case ToggleTerritories:
+			listener.toggleTerritories();
+			break;
 		default:
 			break;
 		}
 	}
 
 	public static enum AppEventType {
-		Credits, UnloadGame, StartGame, EndlessGame, Exit, SpeedToggle
+		Credits, UnloadGame, StartGame, EndlessGame, Exit, SpeedToggle, ToggleTerritories
 	}
 }

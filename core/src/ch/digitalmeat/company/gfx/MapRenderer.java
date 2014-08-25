@@ -4,6 +4,7 @@ import ch.digitalmeat.company.Assets;
 import ch.digitalmeat.company.Colors;
 import ch.digitalmeat.company.Constants;
 import ch.digitalmeat.company.game.Company;
+import ch.digitalmeat.company.game.Settlement;
 import ch.digitalmeat.company.level.GameMap;
 import ch.digitalmeat.company.level.Tile;
 
@@ -15,6 +16,7 @@ public class MapRenderer extends Actor {
 	private Color renderColor = new Color(Color.WHITE);
 	private GameMap map;
 	private Company company;
+	private boolean renderTerritories;
 
 	public MapRenderer() {
 		this(null);
@@ -38,7 +40,10 @@ public class MapRenderer extends Actor {
 			batch.setColor(renderColor);
 			batch.draw(map.texture, getX(), getY());
 
-			renderTerritories(batch, parentAlpha);
+			if (renderTerritories) {
+				renderTerritories(batch, parentAlpha);
+			}
+			renderSettlements(batch, parentAlpha);
 			renderFogOfWar(batch, parentAlpha, map.getCompanies().get(0));
 		}
 	}
@@ -57,6 +62,22 @@ public class MapRenderer extends Actor {
 		}
 	}
 
+	private void renderSettlements(Batch batch, float parentAlpha) {
+		for (Company company : map.getCompanies()) {
+			if (company.renderTerritory) {
+				renderColor.set(Colors.companyColors.get(company.id));
+				renderColor.a = 1f * parentAlpha;
+				batch.setColor(renderColor);
+
+				for (Settlement settlement : company.getSettlements()) {
+					for (Tile tile : settlement.tiles()) {
+						batch.draw(Assets.whitePixel, tile.x, tile.y, 1f, 1f);
+					}
+				}
+			}
+		}
+	}
+
 	private void renderFogOfWar(Batch batch, float parentAlpha, Company company) {
 
 		renderColor.set(Color.BLACK);
@@ -69,5 +90,9 @@ public class MapRenderer extends Actor {
 			}
 		}
 
+	}
+
+	public void toggleTerritories() {
+		renderTerritories = !renderTerritories;
 	}
 }

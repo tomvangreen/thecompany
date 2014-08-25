@@ -129,7 +129,7 @@ public class GameMap {
 			company.claim(candidate);
 		}
 		temp.clear();
-		distanceMatcher.setDistance(distance * 10);
+		distanceMatcher.setDistance(distance * 4);
 		floodFill(temp, tile, distanceMatcher);
 		for (Tile sighted : temp) {
 			if (sighted.company != company) {
