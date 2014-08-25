@@ -18,8 +18,6 @@ public class SettlementsLoader extends LayerLoader {
 
 	private List<Tile> result = new ArrayList<Tile>();
 
-	private GameMap map;
-
 	@Override
 	protected void beforeLoad() {
 		matcher.list.clear();
@@ -43,6 +41,12 @@ public class SettlementsLoader extends LayerLoader {
 			matcher.list.removeAll(result);
 		}
 
+		logOutputs();
+
+		matcher.list.clear();
+	}
+
+	private void logOutputs() {
 		Gdx.app.log(SettlementsLoader.class.getSimpleName(), "created " + map.getSettlements().size() + " settlements");
 		int index = 1;
 		for (Settlement s : map.getSettlements()) {
@@ -52,8 +56,6 @@ public class SettlementsLoader extends LayerLoader {
 			}
 			index++;
 		}
-
-		matcher.list.clear();
 	}
 
 	public GameMap getMap() {

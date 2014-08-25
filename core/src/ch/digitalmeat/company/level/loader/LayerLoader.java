@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 public abstract class LayerLoader {
 	public boolean yDown;
 	private Color color = new Color();
+	protected GameMap map;
 
 	public LayerLoader() {
 		this(false);
@@ -25,6 +26,7 @@ public abstract class LayerLoader {
 	protected abstract void handleTile(Tile tile, int pixel, Color color, int mapX, int mapY, int pixmapX, int pixmapY);
 
 	public void apply(GameMap map, Pixmap pixmap) {
+		this.map = map;
 		beforeLoad();
 		for (int pixmapY = 0; pixmapY < map.height; pixmapY++) {
 			for (int pixmapX = 0; pixmapX < map.height; pixmapX++) {
@@ -47,8 +49,8 @@ public abstract class LayerLoader {
 
 				}
 			}
-			afterLoad();
 		}
+		afterLoad();
 
 	}
 }
