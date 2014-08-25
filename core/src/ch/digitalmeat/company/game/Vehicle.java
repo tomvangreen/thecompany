@@ -12,7 +12,7 @@ import ch.digitalmeat.company.level.Tile.TerrainType;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 
-public class Vehicle extends EconomyItem  {
+public class Vehicle extends EconomyItem {
 	
 	public float storageCapacity;
 	
@@ -84,30 +84,9 @@ public class Vehicle extends EconomyItem  {
 		jsonData = jsonData.child;
 		while(jsonData != null) {
 			JsonValue cost = jsonData.get(0);
-			this.cost.materialCosts.put(cost.name, jsonData.getFloat(cost.name));
+			this.cost.materialCosts.put(economy.goods.get(cost.name), jsonData.getFloat(cost.name));
 			jsonData = jsonData.next;
 		}
 	}
-
-	public Vehicle cpy() {
-		Vehicle clone = new Vehicle(economy);
-		clone.allowedGoods.addAll(allowedGoods);
-		clone.cost.materialCosts.putAll(cost.materialCosts);
-		clone.description = description;
-		clone.id = id;
-		clone.fightForce = fightForce;
-		clone.label = label;
-		clone.lineOfSight = lineOfSight;
-		clone.passableTerrains.addAll(passableTerrains);
-		clone.persons.addAll(persons);
-		clone.speed = speed;
-		clone.storageCapacity = storageCapacity;
-		clone.vehicles.addAll(vehicles);
-		clone.weight = weight;
-		clone.workForce = workForce;
-		return clone;
-	}
-	
-	
 
 }

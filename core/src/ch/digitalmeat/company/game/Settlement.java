@@ -2,9 +2,14 @@ package ch.digitalmeat.company.game;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import ch.digitalmeat.company.game.economy.Building;
+import ch.digitalmeat.company.game.economy.Cost;
+import ch.digitalmeat.company.game.economy.Good;
 import ch.digitalmeat.company.level.GameMap;
 import ch.digitalmeat.company.level.Tile;
 import ch.digitalmeat.company.ui.GameUIBuilder.InfoBarItem;
@@ -18,6 +23,8 @@ public class Settlement implements InfoBarItem {
 	public final String name;
 	private final List<BuildingInstance> buildings = new ArrayList<BuildingInstance>();
 	private final List<Tile> tiles = new ArrayList<Tile>();
+	private final List<VehicleInstance> vehicles = new ArrayList<VehicleInstance>();
+	private final Map<Good, Float> resources = new HashMap<Good, Float>();
 	private float availableArea = 0;
 	private float usedArea = 0;
 
@@ -74,6 +81,49 @@ public class Settlement implements InfoBarItem {
 		for (BuildingInstance building : buildings) {
 			building.tick();
 		}
+	}
+	
+	public void trade(VehicleInstance vehicleInstance, Settlement with) {
+		if(canTrade(vehicleInstance)) {
+			this.vehicles.add(vehicleInstance);
+			pay(vehicleInstance.vehicle.cost, with);
+		}
+		if(with != null) {
+			with.vehicles.remove(vehicleInstance);
+		}
+	}
+	
+	public void pay(Cost cost, Settlement to) {
+		removeCost(cost);
+		if(to != null) {
+			to.addCost(cost);
+		}
+	}
+	
+	public void addCost(Cost cost) {
+		for(Entry<Good, Float> entry : cost.materialCosts.entrySet()) {
+			Float current = resources.get(entry.getKey());
+			current += entry.getValue();
+			resources.put(entry.getKey(), current);
+		}
+	}
+	
+	public void removeCost(Cost cost) {
+		for(Entry<Good, Float> entry : cost.materialCosts.entrySet()) {
+			Float current = resources.get(entry.getKey());
+			current -= entry.getValue();
+			resources.put(entry.getKey(), current);
+		}
+	}
+	
+	public boolean canTrade(VehicleInstance vehicleInstance) {
+		Cost vehicleCost = vehicleInstance.vehicle.cost;
+		boolean canTrade = true;
+		for(Entry<Good, Float> entry : vehicleCost.materialCosts.entrySet()) {
+			Float available = resources.get(entry.getKey());
+			canTrade = canTrade && available >= entry.getValue();
+		}
+		return canTrade;
 	}
 
 	@Override
