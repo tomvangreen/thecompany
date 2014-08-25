@@ -32,9 +32,9 @@ public class Stages implements CameraEventListener {
 	private final Vector2 camTarget = new Vector2();
 	private float targetZoom = 1f;
 
-	private InputMultiplexer plexer = new InputMultiplexer();
-	private InputMultiplexer gamePlexer = new InputMultiplexer();
-	private InputMultiplexer uiPlexer = new InputMultiplexer();
+	private final InputMultiplexer plexer = new InputMultiplexer();
+	public final InputMultiplexer gamePlexer = new InputMultiplexer();
+	public final InputMultiplexer uiPlexer = new InputMultiplexer();
 	private GameMap map;
 
 	public Stages(int width, int height) {

@@ -4,7 +4,7 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.color;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 
-import java.util.Collection;
+import java.util.List;
 
 import ch.digitalmeat.company.Assets;
 import ch.digitalmeat.company.Colors;
@@ -13,14 +13,17 @@ import ch.digitalmeat.company.level.GameMap;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Array;
 
-public class GameUIBuilder {
+public class GameUIBuilder implements EventListener {
 
 	private Stage stage;
 
@@ -49,6 +52,7 @@ public class GameUIBuilder {
 		sidePanel = new Table(Assets.skin);
 		sidePanel.setBackground(background);
 		itemSelector = new SelectBox<InfoBarItem>(Assets.skin, "info");
+		itemSelector.addListener(this);
 		sidePanel.add(itemSelector).fillX().expandX().row();
 		sidePanel.add("Yay").expandY();
 		table.add(infoBar).expandX().fillX().align(Align.top | Align.left);
@@ -59,28 +63,31 @@ public class GameUIBuilder {
 		stage.addActor(table);
 	}
 
-	public void setSelectionItems(Collection<InfoBarItem> items) {
+	public void setSelectionItems(List<InfoBarItem> items) {
 		Array<InfoBarItem> newItems = new Array<InfoBarItem>();
 		for (InfoBarItem item : items) {
 			newItems.add(item);
 		}
 		itemSelector.setItems(newItems);
+		updateInfoPanel(items.get(0));
 	}
 
 	public void setSelectionItem(InfoBarItem item) {
 		Array<InfoBarItem> newItems = new Array<InfoBarItem>();
 		newItems.add(item);
 		itemSelector.setItems(newItems);
+		updateInfoPanel(item);
 	}
 
 	public void setSelectionItem(InfoBarItem... items) {
 		Array<InfoBarItem> newItems = new Array<InfoBarItem>();
 		newItems.addAll(items);
 		itemSelector.setItems(newItems);
+		updateInfoPanel(items[0]);
 	}
 
-	public static interface InfoBarItem {
-		public String getLabel();
+	public void updateInfoPanel(InfoBarItem item) {
+
 	}
 
 	private void fadeIn(Actor actor, float delayTime, float fadeTime) {
@@ -93,6 +100,20 @@ public class GameUIBuilder {
 			)
 		);
 		//@formatter:on
+	}
+
+	public static interface InfoBarItem {
+		public String getLabel();
+	}
+
+	@Override
+	public boolean handle(Event event) {
+		if (event instanceof ChangeEvent) {
+			if (event.getTarget() == itemSelector) {
+				updateInfoPanel(itemSelector.getSelected());
+			}
+		}
+		return false;
 	}
 
 }
