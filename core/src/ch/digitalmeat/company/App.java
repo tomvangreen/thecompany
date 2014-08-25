@@ -118,7 +118,7 @@ public class App extends ApplicationAdapter implements TileSelectedEventListener
 	@Override
 	public void changeSpeed(GameSpeed speed) {
 		this.speed = speed;
-		if (speed != speed.Pause) {
+		if (speed != GameSpeed.Pause) {
 			lastSpeed = speed;
 		}
 	}
