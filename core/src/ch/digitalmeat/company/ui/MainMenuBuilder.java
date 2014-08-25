@@ -1,11 +1,18 @@
 package ch.digitalmeat.company.ui;
 
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.color;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 import ch.digitalmeat.company.Assets;
+import ch.digitalmeat.company.Colors;
 import ch.digitalmeat.company.event.AppEvent.AppEventType;
 import ch.digitalmeat.company.trigger.AppEventTrigger;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
@@ -23,8 +30,12 @@ public class MainMenuBuilder {
 		Table table = new Table(Assets.skin);
 		table.setFillParent(true);
 		table.padBottom(20);
-		table.add("The Company", "big").padTop(10).padBottom(1).row();
-		table.add("Connecting Worlds").padBottom(10f).expandY().align(Align.top).row();
+		Label title = new Label("The Company", Assets.skin, "big");
+		fadeIn(title, 0, 1.5f);
+		table.add(title).padTop(10).padBottom(1).row();
+		Label subtitle = new Label("Connecting Worlds", Assets.skin);
+		fadeIn(subtitle, 0.5f, 3f);
+		table.add(subtitle).padBottom(10f).expandY().align(Align.top).row();
 
 		table.add(button("mission", "Start Game: Mission Mode", TriggerEventListener.SINK)).fillX().padBottom(10).row();
 		table.add(button("endless", "Start Game: Endless Mode", TriggerEventListener.SINK)).fillX().padBottom(10).row();
@@ -34,10 +45,23 @@ public class MainMenuBuilder {
 		stage.addActor(table);
 	}
 
+	private void fadeIn(Actor actor, float delayTime, float fadeTime) {
+		actor.setColor(Colors.TRANSPARENT_WHITE);
+		//@formatter:off
+		actor.addAction(
+			sequence(
+				delay(delayTime)
+				, color(Color.WHITE, fadeTime)
+			)
+		);
+		//@formatter:on
+	}
+
 	private TextButton button(String name, String label, EventListener listener) {
 		TextButton button = new TextButton(label, Assets.skin);
 		button.setName(name);
 		button.addListener(listener);
+		fadeIn(button, 1f, 4f);
 		return button;
 	}
 }

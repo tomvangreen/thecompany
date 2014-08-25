@@ -26,8 +26,9 @@ public class App extends ApplicationAdapter {
 
 		uiBuilder = new UIBuilder(stages);
 		uiBuilder.createMainMenu();
-		map = Assets.loadMap("levels/map-01/map-01");
-		stages.loadMap(map);
+
+		// map = Assets.loadMap("levels/map-01/map-01");
+		// stages.loadMap(map);
 
 	}
 
