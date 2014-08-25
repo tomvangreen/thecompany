@@ -6,7 +6,6 @@ import ch.digitalmeat.company.game.Company;
 import ch.digitalmeat.company.level.GameMap;
 import ch.digitalmeat.company.level.Tile;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -31,7 +30,6 @@ public class MapRenderer extends Actor {
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		Gdx.app.log("MapRenderer", "Parent Alpha: " + parentAlpha);
 		if (map != null) {
 			renderColor.set(getColor());
 			renderColor.a *= parentAlpha;

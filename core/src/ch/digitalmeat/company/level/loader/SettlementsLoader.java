@@ -51,7 +51,7 @@ public class SettlementsLoader extends LayerLoader {
 		int index = 1;
 		for (Settlement s : map.getSettlements()) {
 			Gdx.app.log("SettlementsLoader", "  Settlement " + index);
-			for (Tile tile : s.tiles) {
+			for (Tile tile : s.tiles()) {
 				Gdx.app.log("SettlementsLoader", "    " + tile.x + "/" + (map.height - tile.y) + " -> company " + tile.company.id);
 			}
 			index++;

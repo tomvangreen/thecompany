@@ -61,18 +61,9 @@ public class GameMap {
 	public Settlement createSettlement(SettlementType type, List<Tile> tiles, Company company) {
 		validateTilesForSettlement(tiles);
 
-		Settlement settlement = new Settlement();
-
-		settlement.owner = company;
-		company.settlements.add(settlement);
-
-		settlement.tiles.addAll(tiles);
-		for (Tile tile : tiles) {
-			tile.settlement = settlement;
-		}
-
+		Settlement settlement = new Settlement(SettlementType.City, company);
+		settlement.addTiles(tiles);
 		settlements.add(settlement);
-		company.settlements.add(settlement);
 
 		return settlement;
 	}
@@ -93,4 +84,9 @@ public class GameMap {
 		return companies;
 	}
 
+	public void tick() {
+		for (Company company : companies) {
+			company.tick();
+		}
+	}
 }

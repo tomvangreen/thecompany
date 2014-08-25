@@ -7,23 +7,21 @@ import ch.digitalmeat.company.game.economy.GoodComponent;
 import ch.digitalmeat.company.game.economy.Profession;
 
 public class Person {
-	
+
 	public final List<Profession> professions = new ArrayList<Profession>();
-	
-	public float happiness;
-	
-	public PersonType personType = PersonType.Apprentice;
-	
+
+	public float happiness = 0f;
+
 	public GoodComponent consumption;
-	
+
 	public float weight;
-	
+
 	public float speed;
-	
+
 	public float fightForce;
-	
+
 	public float workForce;
-	
+
 	public float lineOfSight;
 
 	public Person() {
@@ -35,14 +33,7 @@ public class Person {
 		happiness = 1f;
 	}
 
-	public static enum PersonType {
-		// @formatter: off
-		Apprentice
-		, Worker
-		, Soldier
-		, Master
-		, General
-		, Scout;
-		// @formatter: on
+	public void tick() {
+
 	}
 }
