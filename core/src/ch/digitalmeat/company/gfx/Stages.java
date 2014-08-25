@@ -1,6 +1,5 @@
 package ch.digitalmeat.company.gfx;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.alpha;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 import ch.digitalmeat.company.event.CameraEvent;
@@ -11,6 +10,7 @@ import ch.digitalmeat.company.level.GameMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -32,9 +32,9 @@ public class Stages implements CameraEventListener {
 	private final Vector2 camTarget = new Vector2();
 	private float targetZoom = 1f;
 
-	private InputMultiplexer plexer = new InputMultiplexer();
-	private InputMultiplexer gamePlexer = new InputMultiplexer();
-	private InputMultiplexer uiPlexer = new InputMultiplexer();
+	private final InputMultiplexer plexer = new InputMultiplexer();
+	public final InputMultiplexer gamePlexer = new InputMultiplexer();
+	public final InputMultiplexer uiPlexer = new InputMultiplexer();
 	private GameMap map;
 
 	public Stages(int width, int height) {
@@ -44,10 +44,12 @@ public class Stages implements CameraEventListener {
 		gameViewport = new FitViewport(width, height, gameCam);
 		game = new Stage(gameViewport);
 		camTarget.set(gameCam.position.x, gameCam.position.y);
+		game.getRoot().setColor(Color.WHITE);
 
 		uiCam = new OrthographicCamera();
 		uiViewport = new FitViewport(width, height, uiCam);
 		ui = new Stage(uiViewport);
+		ui.getRoot().setColor(Color.WHITE);
 
 		plexer.addProcessor(uiPlexer);
 		uiPlexer.addProcessor(ui);
@@ -96,6 +98,7 @@ public class Stages implements CameraEventListener {
 		game.clear();
 		game.addActor(new MapRenderer(map));
 		game.addAction(Actions.fadeIn(1f));
+		ui.addAction(Actions.fadeIn(1f));
 	}
 
 	public void unloadMap() {
@@ -129,17 +132,20 @@ public class Stages implements CameraEventListener {
 		this.targetZoom = zoom;
 	}
 
-	public void createFade(Runnable runnable) {
+	public void fadeOut(Runnable runnable) {
 		//@formatter:off
-		game.addAction(alpha(0f, 1f));
+		game.addAction(Actions.fadeOut(1f));
 		ui.addAction(
 			sequence(
-				alpha(0f, 1f)
-				, run(runnable)
-				, alpha(1f, 1f)
-				
+				Actions.fadeOut(1f)
+				, run(runnable)				
 			)
 		);
 		//@formatter:on
+	}
+
+	public void fadeIn(float f) {
+		game.addAction(Actions.fadeIn(1f));
+		ui.addAction(Actions.fadeIn(1f));
 	}
 }

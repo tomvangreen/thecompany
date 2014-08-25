@@ -7,22 +7,25 @@ import java.util.List;
 import ch.digitalmeat.company.game.economy.Building;
 import ch.digitalmeat.company.level.GameMap;
 import ch.digitalmeat.company.level.Tile;
+import ch.digitalmeat.company.ui.GameUIBuilder.InfoBarItem;
 
 import com.badlogic.gdx.Gdx;
 
-public class Settlement {
+public class Settlement implements InfoBarItem {
 	public final GameMap map;
 	public final Company owner;
 	public final SettlementType type;
+	public final String name;
 	private final List<BuildingInstance> buildings = new ArrayList<BuildingInstance>();
 	private final List<Tile> tiles = new ArrayList<Tile>();
 	private float availableArea = 0;
 	private float usedArea = 0;
 
-	public Settlement(GameMap map, SettlementType type, Company owner) {
+	public Settlement(GameMap map, SettlementType type, Company owner, String name) {
 		this.map = map;
 		this.type = type;
 		this.owner = owner;
+		this.name = name;
 		if (owner != null) {
 			owner.settlements.add(this);
 		}
@@ -71,5 +74,15 @@ public class Settlement {
 		for (BuildingInstance building : buildings) {
 			building.tick();
 		}
+	}
+
+	@Override
+	public String getLabel() {
+		return name;
+	}
+
+	@Override
+	public String toString() {
+		return getLabel();
 	}
 }

@@ -17,6 +17,7 @@ public class SettlementsLoader extends LayerLoader {
 	private final TileListTileMatcher matcher = new TileListTileMatcher();
 
 	private List<Tile> result = new ArrayList<Tile>();
+	private int index = 1;
 
 	@Override
 	protected void beforeLoad() {

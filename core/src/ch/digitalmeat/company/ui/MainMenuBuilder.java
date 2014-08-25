@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -39,10 +40,10 @@ public class MainMenuBuilder {
 		fadeIn(subtitle, 0.5f, 3f);
 		table.add(subtitle).padBottom(10f).expandY().align(Align.top).row();
 
-		table.add(button("mission", "Start Game: Mission Mode", startListener)).fillX().padBottom(10).row();
-		table.add(button("endless", "Start Game: Endless Mode", endlessListener)).fillX().padBottom(10).row();
-		table.add(button("credits", "Credits", TriggerEventListener.SINK)).fillX().padBottom(10).row();
-		table.add(button("exit", "Exit Game", exitListener)).fillX().padBottom(10).row();
+		table.add(button("mission", "Start Game: Mission Mode", startListener, 0)).fillX().padBottom(10).row();
+		table.add(button("endless", "Start Game: Endless Mode", endlessListener, 1)).fillX().padBottom(10).row();
+		table.add(button("credits", "Credits", TriggerEventListener.SINK, 2)).fillX().padBottom(10).row();
+		table.add(button("exit", "Exit Game", exitListener, 3)).fillX().padBottom(10).row();
 
 		stage.addActor(table);
 	}
@@ -53,17 +54,22 @@ public class MainMenuBuilder {
 		actor.addAction(
 			sequence(
 				delay(delayTime)
-				, color(Color.WHITE, fadeTime)
+				, Actions.forever(
+					Actions.sequence(
+						color(Color.WHITE, fadeTime)
+						, color(Colors.MENU_FADE, fadeTime)
+					)
+				)
 			)
 		);
 		//@formatter:on
 	}
 
-	private TextButton button(String name, String label, EventListener listener) {
+	private TextButton button(String name, String label, EventListener listener, int index) {
 		TextButton button = new TextButton(label, Assets.skin);
 		button.setName(name);
 		button.addListener(listener);
-		fadeIn(button, 1f, 4f);
+		fadeIn(button, 1f + 0.5f * index, 3f);
 		return button;
 	}
 }
