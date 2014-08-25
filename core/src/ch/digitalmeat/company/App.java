@@ -3,6 +3,7 @@ package ch.digitalmeat.company;
 import ch.digitalmeat.company.event.Events;
 import ch.digitalmeat.company.gfx.Stages;
 import ch.digitalmeat.company.level.GameMap;
+import ch.digitalmeat.company.ui.UIBuilder;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -13,14 +14,19 @@ public class App extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private GameMap map;
 	public Stages stages;
+	public UIBuilder uiBuilder;
 
 	@Override
 	public void create() {
 		Assets.create();
 		batch = new SpriteBatch();
 		stages = new Stages(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
+
+		uiBuilder = new UIBuilder(stages);
+		uiBuilder.createMainMenu();
 		map = Assets.loadMap("levels/map-01/map-01");
 		stages.loadMap(map);
+
 	}
 
 	@Override

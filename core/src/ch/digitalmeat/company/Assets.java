@@ -6,12 +6,16 @@ import ch.digitalmeat.company.level.MapLoader;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class Assets {
 	private static MapLoader mapLoader;
 
+	public static Skin skin;
+
 	public static void create() {
 		mapLoader = new MapLoader();
+		skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 	}
 
 	public static boolean fileExists(String path) {
@@ -29,5 +33,4 @@ public class Assets {
 	public static GameMap loadMap(String mapNameWithoutExtension) {
 		return mapLoader.load(mapNameWithoutExtension);
 	}
-
 }
