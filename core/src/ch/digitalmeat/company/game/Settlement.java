@@ -36,6 +36,13 @@ public class Settlement implements InfoBarItem {
 		if (owner != null) {
 			owner.settlements.add(this);
 		}
+		initGoods();
+	}
+	
+	public void initGoods() {
+		for(Entry<String, Good> entry : map.economy.goods.entrySet()) {
+			resources.put(entry.getValue(), 100f);
+		}
 	}
 
 	public boolean createBuilding(Building building) {
@@ -83,10 +90,15 @@ public class Settlement implements InfoBarItem {
 		}
 	}
 	
+	public Collection<Vehicle> getAvailableVehicles() {
+		return map.economy.vehicles.values();
+	}
+	
 	public void trade(VehicleInstance vehicleInstance, Settlement with) {
-		if(canTrade(vehicleInstance)) {
+		if(canTrade(vehicleInstance.vehicle)) {
 			this.vehicles.add(vehicleInstance);
 			pay(vehicleInstance.vehicle.cost, with);
+			Gdx.app.log(getClass().getSimpleName(), "Traded " + vehicleInstance.vehicle.label + ". You have now " + vehicles.size() + " vehicles.");
 		}
 		if(with != null) {
 			with.vehicles.remove(vehicleInstance);
@@ -116,11 +128,14 @@ public class Settlement implements InfoBarItem {
 		}
 	}
 	
-	public boolean canTrade(VehicleInstance vehicleInstance) {
-		Cost vehicleCost = vehicleInstance.vehicle.cost;
+	public boolean canTrade(Vehicle vehicle) {
+		Cost vehicleCost = vehicle.cost;
 		boolean canTrade = true;
 		for(Entry<Good, Float> entry : vehicleCost.materialCosts.entrySet()) {
 			Float available = resources.get(entry.getKey());
+			if(available == null) {
+				return false;
+			}
 			canTrade = canTrade && available >= entry.getValue();
 		}
 		return canTrade;

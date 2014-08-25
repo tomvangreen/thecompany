@@ -10,8 +10,11 @@ import ch.digitalmeat.company.Assets;
 import ch.digitalmeat.company.Colors;
 import ch.digitalmeat.company.Constants;
 import ch.digitalmeat.company.event.AppEvent.AppEventType;
+import ch.digitalmeat.company.event.HintEvent.HintEventListener;
 import ch.digitalmeat.company.game.GameSpeed;
 import ch.digitalmeat.company.game.Settlement;
+import ch.digitalmeat.company.game.Vehicle;
+import ch.digitalmeat.company.hint.BuildingsHint;
 import ch.digitalmeat.company.level.GameMap;
 import ch.digitalmeat.company.trigger.AppEventTrigger;
 import ch.digitalmeat.company.trigger.GameSpeedTrigger;
@@ -42,7 +45,7 @@ public class GameUIBuilder implements EventListener {
 	private Table sidePanel;
 	private Table infoBar;
 
-	public final TriggerEventListener buildingsListener = new TriggerEventListener(new AppEventTrigger(AppEventType.Exit));
+	public final HintUIEventListener buildingsListener;
 	public final TriggerEventListener convoisListener = new TriggerEventListener(new AppEventTrigger(AppEventType.Exit));
 
 	private TriggerEventListener controlPauseListener = new TriggerEventListener(new GameSpeedTrigger(GameSpeed.Pause));
@@ -63,6 +66,7 @@ public class GameUIBuilder implements EventListener {
 
 	public GameUIBuilder(Stage stage) {
 		this.stage = stage;
+		buildingsListener = new HintUIEventListener(new BuildingsHint(this), true);
 	}
 
 	private Button controlButton(TextureRegion icon, EventListener listener) {
@@ -157,6 +161,7 @@ public class GameUIBuilder implements EventListener {
 		// itemSelector.setDisabled(itemSelector.getItems().size <= 1);
 		sideContent.clearChildren();
 		if (item instanceof Settlement) {
+			((BuildingsHint)buildingsListener.hint).settlement = (Settlement) item;
 			sideContent.add(item.getLabel()).align(Align.left | Align.top).row();
 			sideContent.add().expand().row();
 			sideContent.add(button("Buildings", "Buildings", buildingsListener)).fillX().row();
@@ -217,7 +222,22 @@ public class GameUIBuilder implements EventListener {
 	}
 
 	public void buildBuildings(Settlement settlement) {
-
+		details.clearChildren();
+		int i = 0;
+		
+		for(Vehicle vehicle : settlement.getAvailableVehicles()) {
+			Button button = new Button(Assets.skin, "rect");
+			button.add(new Label(vehicle.label, Assets.skin));
+			if(settlement.canTrade(vehicle)) {
+				BuyVehicleListener listener = new BuyVehicleListener(settlement, vehicle);
+				button.addListener(listener);
+			}
+			details.add(button).align(Align.left | Align.top);
+			i++;
+			if(i % 2 == 0) {
+				details.row();
+			}
+		}
 	}
 
 	public void tick(long tick) {
