@@ -51,10 +51,6 @@ public class GameMap {
 		}
 	}
 
-	public static interface TileMatcher {
-		public boolean matches(Tile tile);
-	}
-
 	public Settlement createSettlement(SettlementType type, List<Tile> tiles, Company company) {
 		return null;
 	}
