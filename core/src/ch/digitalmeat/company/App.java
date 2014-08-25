@@ -4,12 +4,15 @@ import ch.digitalmeat.company.event.AppEvent;
 import ch.digitalmeat.company.event.EventQueue;
 import ch.digitalmeat.company.event.Events;
 import ch.digitalmeat.company.event.GameSpeedEvent;
+import ch.digitalmeat.company.event.HintEvent;
 import ch.digitalmeat.company.event.GameSpeedEvent.GameSpeedEventListener;
+import ch.digitalmeat.company.event.HintEvent.HintEventListener;
 import ch.digitalmeat.company.event.TileSelectedEvent;
 import ch.digitalmeat.company.event.TileSelectedEvent.TileSelectedEventListener;
 import ch.digitalmeat.company.game.GameSpeed;
 import ch.digitalmeat.company.game.Settlement;
 import ch.digitalmeat.company.gfx.Stages;
+import ch.digitalmeat.company.hint.Hint;
 import ch.digitalmeat.company.level.GameMap;
 import ch.digitalmeat.company.level.Tile;
 import ch.digitalmeat.company.ui.GameUIBuilder;
@@ -21,7 +24,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
-public class App extends ApplicationAdapter implements TileSelectedEventListener, GameSpeedEventListener {
+public class App extends ApplicationAdapter implements TileSelectedEventListener, GameSpeedEventListener, HintEventListener {
 	private SpriteBatch batch;
 	private GameMap map;
 	public Stages stages;
@@ -35,6 +38,7 @@ public class App extends ApplicationAdapter implements TileSelectedEventListener
 		queue.listen(AppEvent.class, this);
 		queue.listen(TileSelectedEvent.class, this);
 		queue.listen(GameSpeedEvent.class, this);
+		queue.listen(HintEvent.class, this);
 		Assets.create();
 		batch = new SpriteBatch();
 		stages = new Stages(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
@@ -138,7 +142,15 @@ public class App extends ApplicationAdapter implements TileSelectedEventListener
 		} else {
 			changeSpeed(GameSpeed.Pause);
 		}
+	}
 
+	@Override
+	public void notifyHintEvent(Hint hint, boolean show) {
+		if(show) {
+			hint.show();
+		} else {
+			hint.hide();
+		}
 	}
 
 	public void toggleTerritories() {

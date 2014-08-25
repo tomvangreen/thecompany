@@ -115,7 +115,7 @@
 			, lineOfSight: 1
 		}
 		, groundTroop: {
-			label: "Transporter Ship"
+			label: "Ground troops"
 			, cost: []
 			, weight: 0
 			, speed: 1
