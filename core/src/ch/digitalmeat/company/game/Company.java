@@ -3,9 +3,14 @@ package ch.digitalmeat.company.game;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.digitalmeat.company.level.Tile;
+
 public class Company {
 	public int id;
 	public String name;
+	public boolean renderTerritory;
 
 	public final List<Settlement> settlements = new ArrayList<Settlement>();
+	
+	public final List<Tile> territory = new ArrayList<Tile>();
 }

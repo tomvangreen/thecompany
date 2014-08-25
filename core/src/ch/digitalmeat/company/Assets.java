@@ -15,12 +15,14 @@ public class Assets {
 	private static MapLoader mapLoader;
 	public static JsonReader reader = new JsonReader();
 	public static Json json = new Json();
+	public static Texture whitePixel;
 
 	public static Skin skin;
 
 	public static void create() {
 		mapLoader = new MapLoader();
 		skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+		whitePixel = getTexture("blank.png");
 	}
 
 	public static boolean fileExists(String path) {

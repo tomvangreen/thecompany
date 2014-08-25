@@ -1,6 +1,10 @@
 package ch.digitalmeat.company.gfx;
 
+import ch.digitalmeat.company.Assets;
+import ch.digitalmeat.company.Colors;
+import ch.digitalmeat.company.game.Company;
 import ch.digitalmeat.company.level.GameMap;
+import ch.digitalmeat.company.level.Tile;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -33,6 +37,19 @@ public class MapRenderer extends Actor {
 			renderColor.a *= parentAlpha;
 			batch.setColor(renderColor);
 			batch.draw(map.texture, getX(), getY());
+			
+			renderTerritories(batch);
+		}
+	}
+
+	private void renderTerritories(Batch batch) {
+		for(Company company : map.getCompanies()) {
+			renderColor.set(Colors.companyColors.get(company.id));
+			if(company.renderTerritory) {
+				for(Tile tile : company.territory) {
+					batch.draw(Assets.whitePixel, tile.x, tile.y);
+				}					
+			}
 		}
 	}
 }

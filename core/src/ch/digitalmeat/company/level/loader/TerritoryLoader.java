@@ -1,22 +1,18 @@
 package ch.digitalmeat.company.level.loader;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ch.digitalmeat.company.game.Company;
 import ch.digitalmeat.company.level.Tile;
 
 import com.badlogic.gdx.graphics.Color;
 
 public class TerritoryLoader extends LayerLoader {
-	List<Tile> territory = new ArrayList<Tile>();
 	private Company company;
 
 	@Override
 	protected void handleTile(Tile tile, int pixel, Color color, int mapX, int mapY, int pixmapX, int pixmapY) {
 		if (color.a > 0) {
+			company.territory.add(tile);
 			tile.company = this.company;
-			territory.add(tile);
 		}
 	}
 
