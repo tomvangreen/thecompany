@@ -3,7 +3,6 @@ package ch.digitalmeat.company.input;
 import ch.digitalmeat.company.Constants;
 import ch.digitalmeat.company.event.Events;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
@@ -42,7 +41,6 @@ public class MapInputProcessor implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		if (button == 1) {
-			Gdx.app.log("Touch", screenX + "/" + screenY);
 			rightClickPointer = pointer;
 			clickPosition.set(screenX, screenY);
 			camPosition.set(cam.position.x, cam.position.y);
@@ -67,10 +65,8 @@ public class MapInputProcessor implements InputProcessor {
 		if (pointer == rightClickPointer) {
 			// TODO: The scale is based on the screen scaling. extract that
 			v.set(screenX, screenY).sub(clickPosition);
-			Gdx.app.log("Delta", v.x + "/" + v.y);
 			float scaleX = viewport.getWorldWidth() / viewport.getViewportWidth();
 			float scaleY = viewport.getWorldWidth() / viewport.getViewportWidth();
-			Gdx.app.log("Scale", scaleX + "/" + scaleY);
 			v.scl(-scaleX, scaleY).scl(cam.zoom).add(camPosition);
 
 			Events.factory.cam(v);
