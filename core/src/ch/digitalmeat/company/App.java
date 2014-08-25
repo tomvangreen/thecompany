@@ -29,7 +29,7 @@ public class App extends ApplicationAdapter {
 	}
 
 	public void startGame(boolean endless) {
-		stages.createFade(new Runnable() {
+		stages.fadeOut(new Runnable() {
 			@Override
 			public void run() {
 				loadMap();
@@ -39,6 +39,7 @@ public class App extends ApplicationAdapter {
 
 	@Override
 	public void render() {
+		Gdx.app.log("App", "Render");
 		Events.factory.getQueue().dispatch();
 
 		// Update
@@ -62,6 +63,8 @@ public class App extends ApplicationAdapter {
 
 	private void loadMap() {
 		map = Assets.loadMap("levels/map-01/map-01");
+		stages.game.clear();
+		stages.ui.clear();
 		stages.loadMap(map);
 		uiBuilder.createGameUI(map);
 	}
