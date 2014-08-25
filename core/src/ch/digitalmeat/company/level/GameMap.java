@@ -6,21 +6,24 @@ import java.util.List;
 import ch.digitalmeat.company.game.Company;
 import ch.digitalmeat.company.game.Settlement;
 import ch.digitalmeat.company.game.Settlement.SettlementType;
+import ch.digitalmeat.company.game.economy.Economy;
 
 import com.badlogic.gdx.graphics.Texture;
 
 public class GameMap {
+	public final Economy economy;
 	public final Texture texture;
 	public final int width;
 	public final int height;
 
-	private List<Tile> tiles = new ArrayList<Tile>();
-	
-	private List<Settlement> settlements = new ArrayList<Settlement>();
-	
-	private List<Company> companies = new ArrayList<Company>();
+	private final List<Tile> tiles = new ArrayList<Tile>();
 
-	public GameMap(Texture texture) {
+	private final List<Settlement> settlements = new ArrayList<Settlement>();
+
+	private final List<Company> companies = new ArrayList<Company>();
+
+	public GameMap(Texture texture, Economy economy) {
+		this.economy = economy;
 		this.texture = texture;
 		this.width = texture.getWidth();
 		this.height = texture.getHeight();
@@ -56,22 +59,29 @@ public class GameMap {
 	}
 
 	public Settlement createSettlement(SettlementType type, List<Tile> tiles, Company company) {
-		for(Tile tile : tiles) {
-			if(tile.settlement != null) {
+		validateTilesForSettlement(tiles);
+
+		Settlement settlement = new Settlement();
+
+		settlement.owner = company;
+		company.settlements.add(settlement);
+
+		settlement.tiles.addAll(tiles);
+		for (Tile tile : tiles) {
+			tile.settlement = settlement;
+		}
+
+		settlements.add(settlement);
+
+		return settlement;
+	}
+
+	private void validateTilesForSettlement(List<Tile> tiles) {
+		for (Tile tile : tiles) {
+			if (tile.settlement != null) {
 				throw new IllegalArgumentException("Tile already has a settlement");
 			}
 		}
-		
-		Settlement settlement = new Settlement();
-		settlement.tiles = tiles;
-		settlement.owner = company;
-		
-		for(Tile tile : tiles) {
-			tile.settlement = settlement;
-		}
-		
-		settlements.add(settlement);
-		return settlement;
 	}
 
 	public List<Settlement> getSettlements() {
@@ -81,5 +91,5 @@ public class GameMap {
 	public List<Company> getCompanies() {
 		return companies;
 	}
-	
+
 }

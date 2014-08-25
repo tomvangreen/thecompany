@@ -1,0 +1,89 @@
+{
+	goods: {
+		wood: {
+			label: "Wooden Logs"
+			, type: General
+			, description: "Happy logs, freshly cut from your neighbourhood forrest."			
+			, weight: 10
+			, price: 10
+		}
+		, lumber: {
+			label: "Lumber"
+			, type: General
+			, description: "Wood prepared to be used for building and carpenting."
+			, weight: 2
+			, price: 4
+		}
+		, fish: {
+			label: "Fish"
+			, type: Food
+			, weight: 0.5
+			, price: 0.1
+		}
+	}
+	, professions: {
+		worker: {
+
+		}
+		, lumberjack: {
+
+		}
+	}
+	, educations: {
+		lumberjackTraining: {
+			label: "Lumberjack Training"
+			, requires: any
+			, prerequisites: [worker]
+			, profession: lumberjack
+		}
+
+	}
+	, processes: {
+		woodCutting:{
+			label: "Wood Cutting"
+			, professions:[
+				[worker, 0.5]
+				, [lumberjack, 1]
+			]
+			, output: [
+				[1, lumber]
+			]
+		}
+		, lumbering:{
+			label: "Lumbering"
+			, input: [
+				[1, wood]
+			]
+			, output: [
+				[5, lumber]
+			]
+		}
+	}
+	, buildings: {
+		woodcutter: {
+			label: "Wodcutter"
+			, processes:[woodCutting]
+			, requires: [Terrain.Woods]
+			, effects: [ProductionTaxes]
+		}
+		, sawmill: {
+			label: "Saw Mill"
+			, processes:[lumbering]
+			, effects: [ProductionTaxes]
+		}
+		, market: {
+			label: "Market"
+			, effects: [IncreaseTradeTaxes]
+		}
+		, brothel: {
+			label: "Brothel"
+			, effects: [IncreaseHappiness]
+		}
+		, lumberjackSchool: {
+			label: "Lumberjacking School"
+			, educations:[
+				[lumberjackTraining, 50]
+			]
+		}
+	}
+}

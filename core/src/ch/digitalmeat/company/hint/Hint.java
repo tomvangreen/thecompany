@@ -1,4 +1,4 @@
-package ch.digitalmeat.company.ui;
+package ch.digitalmeat.company.hint;
 
 public interface Hint {
 	public void show();

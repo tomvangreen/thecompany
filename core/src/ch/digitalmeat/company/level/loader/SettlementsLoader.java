@@ -1,9 +1,13 @@
-package ch.digitalmeat.company.level;
+package ch.digitalmeat.company.level.loader;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.digitalmeat.company.game.Settlement;
 import ch.digitalmeat.company.game.Settlement.SettlementType;
+import ch.digitalmeat.company.level.GameMap;
+import ch.digitalmeat.company.level.Tile;
+import ch.digitalmeat.company.level.TileListTileMatcher;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -11,9 +15,9 @@ import com.badlogic.gdx.graphics.Color;
 public class SettlementsLoader extends LayerLoader {
 
 	private final TileListTileMatcher matcher = new TileListTileMatcher();
-	
+
 	private List<Tile> result = new ArrayList<Tile>();
-	
+
 	private GameMap map;
 
 	@Override
@@ -30,16 +34,24 @@ public class SettlementsLoader extends LayerLoader {
 
 	@Override
 	protected void afterLoad() {
-		
-		while(matcher.list.size() > 0) {
+
+		while (matcher.list.size() > 0) {
 			Tile tile = matcher.list.get(0);
 			result.clear();
 			map.floodFill(result, tile, matcher);
 			map.createSettlement(SettlementType.City, result, tile.company);
 			matcher.list.removeAll(result);
 		}
-		
+
 		Gdx.app.log(SettlementsLoader.class.getSimpleName(), "created " + map.getSettlements().size() + " settlements");
+		int index = 1;
+		for (Settlement s : map.getSettlements()) {
+			Gdx.app.log("SettlementsLoader", "  Settlement " + index);
+			for (Tile tile : s.tiles) {
+				Gdx.app.log("SettlementsLoader", "    " + tile.x + "/" + (map.height - tile.y));
+			}
+			index++;
+		}
 		matcher.list.clear();
 	}
 

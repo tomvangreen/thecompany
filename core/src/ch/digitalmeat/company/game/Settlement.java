@@ -8,7 +8,7 @@ import ch.digitalmeat.company.level.Tile;
 public class Settlement {
 	public Company owner;
 	public SettlementType type;
-	public List<Tile> tiles = new ArrayList<Tile>();
+	public final List<Tile> tiles = new ArrayList<Tile>();
 
 	public static enum SettlementType {
 		City, Harbor, Camp

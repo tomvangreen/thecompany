@@ -1,5 +1,6 @@
 package ch.digitalmeat.company;
 
+import ch.digitalmeat.company.event.AppEvent;
 import ch.digitalmeat.company.event.Events;
 import ch.digitalmeat.company.gfx.Stages;
 import ch.digitalmeat.company.level.GameMap;
@@ -18,6 +19,7 @@ public class App extends ApplicationAdapter {
 
 	@Override
 	public void create() {
+		Events.factory.getQueue().listen(AppEvent.class, this);
 		Assets.create();
 		batch = new SpriteBatch();
 		stages = new Stages(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
@@ -46,5 +48,9 @@ public class App extends ApplicationAdapter {
 	@Override
 	public void resize(int width, int height) {
 		stages.resize(width, height);
+	}
+
+	public void exit() {
+		Gdx.app.exit();
 	}
 }

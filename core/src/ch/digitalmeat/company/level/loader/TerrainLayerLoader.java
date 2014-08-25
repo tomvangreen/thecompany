@@ -1,5 +1,6 @@
-package ch.digitalmeat.company.level;
+package ch.digitalmeat.company.level.loader;
 
+import ch.digitalmeat.company.level.Tile;
 import ch.digitalmeat.company.level.Tile.TerrainType;
 
 import com.badlogic.gdx.graphics.Color;

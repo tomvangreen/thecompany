@@ -1,9 +1,10 @@
-package ch.digitalmeat.company.level;
+package ch.digitalmeat.company.level.loader;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ch.digitalmeat.company.game.Company;
+import ch.digitalmeat.company.level.Tile;
 
 import com.badlogic.gdx.graphics.Color;
 

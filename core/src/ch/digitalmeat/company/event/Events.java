@@ -1,6 +1,7 @@
 package ch.digitalmeat.company.event;
 
-import ch.digitalmeat.company.ui.Hint;
+import ch.digitalmeat.company.event.AppEvent.AppEventType;
+import ch.digitalmeat.company.hint.Hint;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -50,6 +51,13 @@ public class Events {
 
 	public Events cam(float zoom) {
 		return cam(null, false);
+	}
+
+	public Events app(AppEventType type) {
+		AppEvent event = new AppEvent();
+		event.type = type;
+		queue.queue(event);
+		return this;
 	}
 
 	public EventQueue getQueue() {
