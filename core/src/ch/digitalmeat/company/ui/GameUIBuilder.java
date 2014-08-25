@@ -10,9 +10,11 @@ import ch.digitalmeat.company.Assets;
 import ch.digitalmeat.company.Colors;
 import ch.digitalmeat.company.Constants;
 import ch.digitalmeat.company.event.AppEvent.AppEventType;
+import ch.digitalmeat.company.game.GameSpeed;
 import ch.digitalmeat.company.game.Settlement;
 import ch.digitalmeat.company.level.GameMap;
 import ch.digitalmeat.company.trigger.AppEventTrigger;
+import ch.digitalmeat.company.trigger.GameSpeedTrigger;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -42,10 +44,10 @@ public class GameUIBuilder implements EventListener {
 	public final TriggerEventListener buildingsListener = new TriggerEventListener(new AppEventTrigger(AppEventType.Exit));
 	public final TriggerEventListener convoisListener = new TriggerEventListener(new AppEventTrigger(AppEventType.Exit));
 
-	private TriggerEventListener controlPauseListener = new TriggerEventListener(new AppEventTrigger(AppEventType.SpeedPause));
-	private TriggerEventListener controlPlayListener = new TriggerEventListener(new AppEventTrigger(AppEventType.SpeedNormal));
-	private TriggerEventListener controlFastListener = new TriggerEventListener(new AppEventTrigger(AppEventType.SpeedFast));
-	private TriggerEventListener controlUltraListener = new TriggerEventListener(new AppEventTrigger(AppEventType.SpeedUltra));
+	private TriggerEventListener controlPauseListener = new TriggerEventListener(new GameSpeedTrigger(GameSpeed.Pause));
+	private TriggerEventListener controlPlayListener = new TriggerEventListener(new GameSpeedTrigger(GameSpeed.Normal));
+	private TriggerEventListener controlFastListener = new TriggerEventListener(new GameSpeedTrigger(GameSpeed.Fast));
+	private TriggerEventListener controlUltraListener = new TriggerEventListener(new GameSpeedTrigger(GameSpeed.Ultra));
 
 	public SelectBox<InfoBarItem> itemSelector;
 
@@ -62,6 +64,7 @@ public class GameUIBuilder implements EventListener {
 		button.add(new Image(icon)).prefWidth(12).prefHeight(12);
 		button.setWidth(12);
 		button.setHeight(12);
+		button.addListener(listener);
 		return button;
 	}
 

@@ -1,6 +1,7 @@
 package ch.digitalmeat.company.event;
 
 import ch.digitalmeat.company.event.AppEvent.AppEventType;
+import ch.digitalmeat.company.game.GameSpeed;
 import ch.digitalmeat.company.hint.Hint;
 
 import com.badlogic.gdx.Gdx;
@@ -66,6 +67,13 @@ public class Events {
 	public Events app(AppEventType type) {
 		AppEvent event = new AppEvent();
 		event.type = type;
+		queue.queue(event);
+		return this;
+	}
+
+	public Events speed(GameSpeed speed) {
+		GameSpeedEvent event = new GameSpeedEvent();
+		event.speed = speed;
 		queue.queue(event);
 		return this;
 	}

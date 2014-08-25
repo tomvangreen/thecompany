@@ -9,6 +9,7 @@ import ch.digitalmeat.company.game.Settlement.SettlementType;
 import ch.digitalmeat.company.game.economy.Economy;
 import ch.digitalmeat.company.level.DistanceTileMatcher.DistanceFunction;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
 public class GameMap {
@@ -86,6 +87,7 @@ public class GameMap {
 	}
 
 	public void tick() {
+		Gdx.app.log("GameMap", "Tick");
 		for (Company company : companies) {
 			company.tick();
 		}
