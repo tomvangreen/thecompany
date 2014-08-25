@@ -6,6 +6,7 @@ import ch.digitalmeat.company.level.loader.MapLoader;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonReader;
@@ -16,6 +17,11 @@ public class Assets {
 	public static JsonReader reader = new JsonReader();
 	public static Json json = new Json();
 	public static Texture whitePixel;
+	public static Texture controls;
+	public static TextureRegion controlPause;
+	public static TextureRegion controlPlay;
+	public static TextureRegion controlFast;
+	public static TextureRegion controlUltraFast;
 
 	public static Skin skin;
 
@@ -23,6 +29,11 @@ public class Assets {
 		mapLoader = new MapLoader();
 		skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 		whitePixel = getTexture("blank.png");
+		controls = new Texture("controls.png");
+		controlPause = new TextureRegion(controls, 0, 0, 8, 8);
+		controlPlay = new TextureRegion(controls, 8, 0, 8, 8);
+		controlFast = new TextureRegion(controls, 16, 0, 8, 8);
+		controlUltraFast = new TextureRegion(controls, 24, 0, 8, 8);
 	}
 
 	public static boolean fileExists(String path) {

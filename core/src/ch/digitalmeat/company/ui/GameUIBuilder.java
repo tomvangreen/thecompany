@@ -15,12 +15,15 @@ import ch.digitalmeat.company.level.GameMap;
 import ch.digitalmeat.company.trigger.AppEventTrigger;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -39,6 +42,11 @@ public class GameUIBuilder implements EventListener {
 	public final TriggerEventListener buildingsListener = new TriggerEventListener(new AppEventTrigger(AppEventType.Exit));
 	public final TriggerEventListener convoisListener = new TriggerEventListener(new AppEventTrigger(AppEventType.Exit));
 
+	private TriggerEventListener controlPauseListener = new TriggerEventListener(new AppEventTrigger(AppEventType.SpeedPause));
+	private TriggerEventListener controlPlayListener = new TriggerEventListener(new AppEventTrigger(AppEventType.SpeedNormal));
+	private TriggerEventListener controlFastListener = new TriggerEventListener(new AppEventTrigger(AppEventType.SpeedFast));
+	private TriggerEventListener controlUltraListener = new TriggerEventListener(new AppEventTrigger(AppEventType.SpeedUltra));
+
 	public SelectBox<InfoBarItem> itemSelector;
 
 	private Table sideContent;
@@ -49,12 +57,24 @@ public class GameUIBuilder implements EventListener {
 		this.stage = stage;
 	}
 
+	private Button controlButton(TextureRegion icon, EventListener listener) {
+		Button button = new Button(Assets.skin, "rect");
+		button.add(new Image(icon)).prefWidth(12).prefHeight(12);
+		button.setWidth(12);
+		button.setHeight(12);
+		return button;
+	}
+
 	public void build(GameMap map) {
 		NinePatchDrawable background = new NinePatchDrawable(Assets.skin.getPatch("default-rect"));
 		Table table = new Table(Assets.skin);
 		table.setFillParent(true);
 		infoBar = new Table(Assets.skin);
 		infoBar.setBackground(background);
+		infoBar.add(controlButton(Assets.controlPause, controlPauseListener));
+		infoBar.add(controlButton(Assets.controlPlay, controlPlayListener));
+		infoBar.add(controlButton(Assets.controlFast, controlFastListener));
+		infoBar.add(controlButton(Assets.controlUltraFast, controlUltraListener));
 		infoBar.add("Monniz:");
 		infoBar.add("1337").padRight(5);
 		infoBar.add("Population:");

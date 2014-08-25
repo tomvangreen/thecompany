@@ -24,6 +24,8 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 },
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	default: { down: default-round-clear-down, up: default-round-clear },
+	rect: { down: default-rect-down, up: default-rect },
+	rect-red: { down: default-rect-down, up: default-rect-down},
 	toggle: { down: default-round-clear-down, checked: default-round-clear-down, up: default-round-clear }
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {

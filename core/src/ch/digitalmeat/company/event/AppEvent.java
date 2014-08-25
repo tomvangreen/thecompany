@@ -24,6 +24,6 @@ public class AppEvent implements GameEvent<App> {
 	}
 
 	public static enum AppEventType {
-		Credits, UnloadGame, StartGame, EndlessGame, Exit
+		Credits, UnloadGame, StartGame, EndlessGame, Exit, SpeedPause, SpeedNormal, SpeedFast, SpeedUltra
 	}
 }
