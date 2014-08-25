@@ -52,6 +52,7 @@ public class SettlementsLoader extends LayerLoader {
 			}
 			index++;
 		}
+
 		matcher.list.clear();
 	}
 
