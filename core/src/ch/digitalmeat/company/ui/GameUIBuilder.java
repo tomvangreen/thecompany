@@ -14,11 +14,14 @@ import ch.digitalmeat.company.game.Settlement;
 import ch.digitalmeat.company.level.GameMap;
 import ch.digitalmeat.company.trigger.AppEventTrigger;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -57,8 +60,21 @@ public class GameUIBuilder implements EventListener {
 		infoBar.add("37").padRight(5);
 		infoBar.add("Stuff:");
 		infoBar.add("20");
-
 		sidePanel = new Table(Assets.skin);
+		sidePanel.setTouchable(Touchable.enabled);
+		sidePanel.addListener(new EventListener() {
+
+			@Override
+			public boolean handle(Event event) {
+				Gdx.app.log("Blarg", event.toString());
+				if (event instanceof InputEvent) {
+					event.stop();
+					return true;
+				}
+				return false;
+			}
+
+		});
 		sidePanel.setBackground(background);
 		itemSelector = new SelectBox<InfoBarItem>(Assets.skin, "info");
 		itemSelector.addListener(this);
@@ -98,7 +114,7 @@ public class GameUIBuilder implements EventListener {
 	}
 
 	public void updateInfoPanel(InfoBarItem item) {
-		itemSelector.setDisabled(itemSelector.getItems().size <= 1);
+		// itemSelector.setDisabled(itemSelector.getItems().size <= 1);
 		sideContent.clearChildren();
 		if (item instanceof Settlement) {
 			sideContent.add(item.getLabel()).align(Align.left | Align.top).row();
@@ -132,6 +148,7 @@ public class GameUIBuilder implements EventListener {
 		if (event instanceof ChangeEvent) {
 			if (event.getTarget() == itemSelector) {
 				updateInfoPanel(itemSelector.getSelected());
+				return true;
 			}
 		}
 		return false;
