@@ -85,8 +85,8 @@ public class GameMap {
 	}
 
 	public void tick() {
-		for (Settlement settlement : settlements) {
-			settlement.tick();
+		for (Company company : companies) {
+			company.tick();
 		}
 	}
 }

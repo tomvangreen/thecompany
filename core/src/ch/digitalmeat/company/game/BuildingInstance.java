@@ -10,4 +10,8 @@ public class BuildingInstance {
 		this.building = building;
 		this.settlement = settlement;
 	}
+
+	public void tick() {
+
+	}
 }

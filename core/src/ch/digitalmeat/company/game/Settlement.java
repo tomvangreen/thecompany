@@ -62,6 +62,8 @@ public class Settlement {
 	}
 
 	public void tick() {
-
+		for (BuildingInstance building : buildings) {
+			building.tick();
+		}
 	}
 }

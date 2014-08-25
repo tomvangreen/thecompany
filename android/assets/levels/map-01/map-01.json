@@ -81,9 +81,7 @@
 		}
 		, lumberjackSchool: {
 			label: "Lumberjacking School"
-			, educations:[
-				[lumberjackTraining, 50]
-			]
+			, educations:[lumberjackTraining]
 		}
 	}
 }
