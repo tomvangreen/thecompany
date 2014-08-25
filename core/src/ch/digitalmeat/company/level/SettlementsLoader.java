@@ -35,9 +35,8 @@ public class SettlementsLoader extends LayerLoader {
 			Tile tile = matcher.list.get(0);
 			result.clear();
 			map.floodFill(result, tile, matcher);
-			map.createSettlement(SettlementType.City, result, null);
+			map.createSettlement(SettlementType.City, result, tile.company);
 			matcher.list.removeAll(result);
-			
 		}
 		
 		Gdx.app.log(SettlementsLoader.class.getSimpleName(), "created " + map.getSettlements().size() + " settlements");
