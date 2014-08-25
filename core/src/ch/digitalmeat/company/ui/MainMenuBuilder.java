@@ -21,6 +21,8 @@ public class MainMenuBuilder {
 	public final Stage stage;
 
 	public final TriggerEventListener exitListener = new TriggerEventListener(new AppEventTrigger(AppEventType.Exit));
+	public final TriggerEventListener startListener = new TriggerEventListener(new AppEventTrigger(AppEventType.StartGame));
+	public final TriggerEventListener endlessListener = new TriggerEventListener(new AppEventTrigger(AppEventType.EndlessGame));
 
 	public MainMenuBuilder(Stage stage) {
 		this.stage = stage;
@@ -37,8 +39,8 @@ public class MainMenuBuilder {
 		fadeIn(subtitle, 0.5f, 3f);
 		table.add(subtitle).padBottom(10f).expandY().align(Align.top).row();
 
-		table.add(button("mission", "Start Game: Mission Mode", TriggerEventListener.SINK)).fillX().padBottom(10).row();
-		table.add(button("endless", "Start Game: Endless Mode", TriggerEventListener.SINK)).fillX().padBottom(10).row();
+		table.add(button("mission", "Start Game: Mission Mode", startListener)).fillX().padBottom(10).row();
+		table.add(button("endless", "Start Game: Endless Mode", endlessListener)).fillX().padBottom(10).row();
 		table.add(button("credits", "Credits", TriggerEventListener.SINK)).fillX().padBottom(10).row();
 		table.add(button("exit", "Exit Game", exitListener)).fillX().padBottom(10).row();
 

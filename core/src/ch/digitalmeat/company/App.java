@@ -26,10 +26,15 @@ public class App extends ApplicationAdapter {
 
 		uiBuilder = new UIBuilder(stages);
 		uiBuilder.createMainMenu();
+	}
 
-		// map = Assets.loadMap("levels/map-01/map-01");
-		// stages.loadMap(map);
-
+	public void startGame(boolean endless) {
+		stages.createFade(new Runnable() {
+			@Override
+			public void run() {
+				loadMap();
+			}
+		});
 	}
 
 	@Override
@@ -53,5 +58,11 @@ public class App extends ApplicationAdapter {
 
 	public void exit() {
 		Gdx.app.exit();
+	}
+
+	private void loadMap() {
+		map = Assets.loadMap("levels/map-01/map-01");
+		stages.loadMap(map);
+		uiBuilder.createGameUI(map);
 	}
 }

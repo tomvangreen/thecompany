@@ -1,5 +1,8 @@
 package ch.digitalmeat.company.gfx;
 
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.alpha;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 import ch.digitalmeat.company.event.CameraEvent;
 import ch.digitalmeat.company.event.CameraEvent.CameraEventListener;
 import ch.digitalmeat.company.event.Events;
@@ -12,6 +15,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -91,6 +95,7 @@ public class Stages implements CameraEventListener {
 		this.map = map;
 		game.clear();
 		game.addActor(new MapRenderer(map));
+		game.addAction(Actions.fadeIn(1f));
 	}
 
 	public void unloadMap() {
@@ -122,5 +127,19 @@ public class Stages implements CameraEventListener {
 	@Override
 	public void setCamZoomTarget(float zoom) {
 		this.targetZoom = zoom;
+	}
+
+	public void createFade(Runnable runnable) {
+		//@formatter:off
+		game.addAction(alpha(0f, 1f));
+		ui.addAction(
+			sequence(
+				alpha(0f, 1f)
+				, run(runnable)
+				, alpha(1f, 1f)
+				
+			)
+		);
+		//@formatter:on
 	}
 }

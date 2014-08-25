@@ -12,12 +12,18 @@ public class AppEvent implements GameEvent<App> {
 		case Exit:
 			listener.exit();
 			break;
+		case StartGame:
+			listener.startGame(false);
+			break;
+		case EndlessGame:
+			listener.startGame(true);
+			break;
 		default:
 			break;
 		}
 	}
 
 	public static enum AppEventType {
-		MainMenu, Credits, UnloadGame, LoadGame, Exit
+		Credits, UnloadGame, StartGame, EndlessGame, Exit
 	}
 }
