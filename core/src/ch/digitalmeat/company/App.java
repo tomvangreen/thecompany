@@ -63,6 +63,7 @@ public class App extends ApplicationAdapter implements TileSelectedEventListener
 			tickTimer += deltaTime;
 			while (tickTimer > speed.interval) {
 				map.tick();
+				uiBuilder.gameUI.tick(map.getTick());
 				tickTimer -= speed.interval;
 			}
 		} else {

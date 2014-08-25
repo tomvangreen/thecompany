@@ -20,6 +20,8 @@ public class GameMap {
 	public final int width;
 	public final int height;
 
+	private long ticks;
+
 	private final List<Tile> tiles = new ArrayList<Tile>();
 
 	private final List<Settlement> settlements = new ArrayList<Settlement>();
@@ -104,7 +106,8 @@ public class GameMap {
 	}
 
 	public void tick() {
-		Gdx.app.log("GameMap", "Tick");
+		ticks++;
+		Gdx.app.log("GameMap", "Tick " + ticks);
 		for (Company company : companies) {
 			company.tick();
 		}
@@ -125,5 +128,9 @@ public class GameMap {
 		for (Tile candidate : temp) {
 			company.claim(candidate);
 		}
+	}
+
+	public long getTick() {
+		return ticks;
 	}
 }

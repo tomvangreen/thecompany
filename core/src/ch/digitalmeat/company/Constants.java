@@ -15,4 +15,6 @@ public class Constants {
 	public static final float SIDEPANEL_WIDTH = 80;
 
 	public static final float TERRITORY_LAYER_ALPHA = 0.5f;
+
+	public final static float HOURS_PER_DAY = 24f;
 }

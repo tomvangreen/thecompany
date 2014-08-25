@@ -26,6 +26,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -55,6 +56,8 @@ public class GameUIBuilder implements EventListener {
 
 	private Table details;
 
+	private Label time;
+
 	public GameUIBuilder(Stage stage) {
 		this.stage = stage;
 	}
@@ -78,12 +81,11 @@ public class GameUIBuilder implements EventListener {
 		infoBar.add(controlButton(Assets.controlPlay, controlPlayListener));
 		infoBar.add(controlButton(Assets.controlFast, controlFastListener));
 		infoBar.add(controlButton(Assets.controlUltraFast, controlUltraListener));
-		infoBar.add("Monniz:");
-		infoBar.add("1337").padRight(5);
-		infoBar.add("Population:");
-		infoBar.add("37").padRight(5);
-		infoBar.add("Stuff:");
-		infoBar.add("20");
+		infoBar.add().expandX();
+
+		time = new Label("0", Assets.skin);
+		infoBar.add(time);
+
 		sidePanel = new Table(Assets.skin);
 		sidePanel.setTouchable(Touchable.enabled);
 		EventListener stopTouch = new EventListener() {
@@ -211,4 +213,9 @@ public class GameUIBuilder implements EventListener {
 
 	}
 
+	public void tick(long tick) {
+		int hours = (int) (tick % Constants.HOURS_PER_DAY);
+		int days = (int) (tick / Constants.HOURS_PER_DAY) + 1;
+		time.setText("Day: " + days + " - " + hours + ":00");
+	}
 }
