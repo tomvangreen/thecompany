@@ -40,7 +40,7 @@ public class GameMap {
 	}
 
 	public void floodFill(List<Tile> results, Tile tile, TileMatcher matcher) {
-		if (matcher.matches(tile)) {
+		if (!results.contains(tile) && matcher.matches(tile)) {
 			results.add(tile);
 			for (Direction direction : Direction.values()) {
 				Tile neighbour = tile.neighbour(direction);
@@ -52,6 +52,9 @@ public class GameMap {
 	}
 
 	public Settlement createSettlement(SettlementType type, List<Tile> tiles, Company company) {
-		return null;
+		Settlement settlement = new Settlement();
+		settlement.tiles = tiles;
+		settlement.owner = company;
+		return settlement;
 	}
 }
