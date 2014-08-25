@@ -25,6 +25,7 @@ public class App extends ApplicationAdapter implements TileSelectedEventListener
 	public Stages stages;
 	public UIBuilder uiBuilder;
 	public GameSpeed speed = GameSpeed.Pause;
+	public GameSpeed lastSpeed = GameSpeed.Normal;
 
 	@Override
 	public void create() {
@@ -109,6 +110,18 @@ public class App extends ApplicationAdapter implements TileSelectedEventListener
 	@Override
 	public void changeSpeed(GameSpeed speed) {
 		this.speed = speed;
+		if (speed != speed.Pause) {
+			lastSpeed = speed;
+		}
+	}
+
+	public void toggleSpeed() {
+		if (speed == GameSpeed.Pause) {
+			changeSpeed(lastSpeed);
+		} else {
+			changeSpeed(GameSpeed.Pause);
+		}
+
 	}
 
 }

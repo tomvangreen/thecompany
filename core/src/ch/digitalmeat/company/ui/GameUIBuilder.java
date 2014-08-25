@@ -58,6 +58,8 @@ public class GameUIBuilder implements EventListener {
 
 	private Label time;
 
+	private Label day;
+
 	public GameUIBuilder(Stage stage) {
 		this.stage = stage;
 	}
@@ -82,9 +84,11 @@ public class GameUIBuilder implements EventListener {
 		infoBar.add(controlButton(Assets.controlFast, controlFastListener));
 		infoBar.add(controlButton(Assets.controlUltraFast, controlUltraListener));
 		infoBar.add().expandX();
-
-		time = new Label("0", Assets.skin);
-		infoBar.add(time);
+		day = new Label("Day 1", Assets.skin);
+		time = new Label("0:00", Assets.skin);
+		time.setAlignment(Align.right);
+		infoBar.add(day).padRight(3);
+		infoBar.add(time).prefWidth(30).padRight(3).align(Align.right);
 
 		sidePanel = new Table(Assets.skin);
 		sidePanel.setTouchable(Touchable.enabled);
@@ -121,6 +125,7 @@ public class GameUIBuilder implements EventListener {
 		fadeIn(table, 0.5f, 2f);
 		stage.getRoot().setColor(Color.WHITE);
 		stage.addActor(table);
+		tick(map.getTick());
 	}
 
 	public void setSelectionItems(List<InfoBarItem> items) {
@@ -216,6 +221,7 @@ public class GameUIBuilder implements EventListener {
 	public void tick(long tick) {
 		int hours = (int) (tick % Constants.HOURS_PER_DAY);
 		int days = (int) (tick / Constants.HOURS_PER_DAY) + 1;
-		time.setText("Day: " + days + " - " + hours + ":00");
+		day.setText("Day: " + days);
+		time.setText(hours + ":00");
 	}
 }

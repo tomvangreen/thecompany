@@ -1,9 +1,11 @@
 package ch.digitalmeat.company.input;
 
 import ch.digitalmeat.company.Constants;
+import ch.digitalmeat.company.event.AppEvent.AppEventType;
 import ch.digitalmeat.company.event.Events;
 
 import com.badlogic.gdx.Input.Buttons;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
@@ -29,6 +31,9 @@ public class MapInputProcessor implements InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
+		if (keycode == Keys.SPACE) {
+			Events.factory.app(AppEventType.SpeedToggle);
+		}
 		return false;
 	}
 
