@@ -35,20 +35,19 @@ public abstract class LayerLoader {
 
 				if (!yDown) {
 
-					if (yDown) {
-						mapY = map.height - pixmapY;
-					}
-
-					Tile tile = map.tile(mapX, mapY);
-
-					if (tile != null) {
-						int pixel = pixmap.getPixel(pixmapX, pixmapY);
-						Color.rgba8888ToColor(color, pixel);
-						handleTile(tile, pixel, color, mapX, mapY, pixmapX, pixmapY);
-					}
-
+					mapY = map.height - pixmapY;
 				}
+
+				Tile tile = map.tile(mapX, mapY);
+
+				if (tile != null) {
+					int pixel = pixmap.getPixel(pixmapX, pixmapY);
+					Color.rgba8888ToColor(color, pixel);
+					handleTile(tile, pixel, color, mapX, mapY, pixmapX, pixmapY);
+				}
+
 			}
+
 		}
 		afterLoad();
 
